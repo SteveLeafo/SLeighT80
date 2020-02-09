@@ -41,13 +41,29 @@ Thanks to "Budford" for your help and getting me motivated  enough to finish thi
 Also, I don't think I could have written this without the following sites that have all the information you need to write any emulator.
 
  http://emulator101.com/
+ 
+ 
  https://www.tutorialspoint.com/instruction-type-rrc-in-8085-microprocessor 
+ 
+ 
  https://sam.speccy.cz/asm/8080-z80_asm_techniques.pdf
+ 
+ 
  https://bluishcoder.co.nz/js8080/ 
+ 
+ 
  http://sensi.org/~svo/i8080/
+ 
+ 
  https://pastraiser.com/cpu/i8080/i8080_opcodes.html
+ 
+ 
  http://www.classiccmp.org/dunfield/r/8080.txt
+ 
+ 
  http://computerarcheology.com/Arcade/SpaceInvaders/Code.html
+ 
+ 
 
 
 
