@@ -125,7 +125,7 @@ SetShellVarContext all
   	
 
     CreateDirectory "$SMPROGRAMS\SLeighT80"
-    SetOutPath "$SMPROGRAMS\SLeighT80"
+    SetOutPath "$INSTDIR"
     CreateShortCut "$SMPROGRAMS\SLeighT80\SLeighT80.lnk" "$INSTDIR\SLeighT80.exe" "" "$INSTDIR\SLeighT80.ico" 0
 
     ;IfFileExists "$INSTDIR\SLeighT80.exe" 0 +2
