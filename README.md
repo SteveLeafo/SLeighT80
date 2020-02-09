@@ -3,7 +3,7 @@ A winforms emualtor for the 8080 processor.
 
 Also contains a framework for the space invaders hardware so in theory it should be possible to play some old school arcade games.
 
-![8080](https://raw.githubusercontent.com/SteveLeafo/SLeighT80/master/docs/game.png)
+![8080](https://raw.githubusercontent.com/SteveLeafo/SLeighT80/master/doc/game.png)
 
 
 ## Why?
@@ -20,7 +20,7 @@ emulatorin c# to see how it went.  I also decided against OpenGL or Vulkan to se
 - Uses the really cool ByteViewer to view the emualted machines RAM
 - I added some very basic emulator functionality for sound, XInput etc, so I should be possible to fire up and play any old 8080 games you have lying around.
 
-![debug](https://raw.githubusercontent.com/SteveLeafo/SLeighT80/master/docs/debug.png)
+![debug](https://raw.githubusercontent.com/SteveLeafo/SLeighT80/master/doc/debug.png)
 
 
 ## How to use it?
@@ -31,7 +31,7 @@ You can load any 8080 machine code and start stepping through.
 
 There are a number of 8080 tests around the net, most of those should run without any issues
 
-![tests](https://raw.githubusercontent.com/SteveLeafo/SLeighT80/master/docs/emualtor.png)
+![tests](https://raw.githubusercontent.com/SteveLeafo/SLeighT80/master/doc/emualtor.png)
 
 
 ## Credit
