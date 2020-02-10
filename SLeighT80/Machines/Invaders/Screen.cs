@@ -49,7 +49,7 @@ namespace SLeighT80.Machines.Invaders
             {
                 m_lastScaleFactor = m_scaleFactor;
                 m_gameBitmap = new Bitmap(224 * m_scaleFactor, 256 * m_scaleFactor + offset  / m_scaleFactor);
-                Screen.m_graphics = Graphics.FromImage(m_gameBitmap);
+                m_graphics = Graphics.FromImage(m_gameBitmap);
                 m_fpsCounter = new Stopwatch();
                 m_fpsCounter.Start();
                 for (int i = 0; i <  Cache.Length; ++i)
@@ -58,7 +58,7 @@ namespace SLeighT80.Machines.Invaders
                 }
             }
             machine.Painting = true;
-            bool changed = Render(Screen.m_graphics, machine.RAM, offset / m_scaleFactor);
+            bool changed = Render(m_graphics, machine.RAM, offset / m_scaleFactor);
             if (changed)
             {
                 machine.Frames++;

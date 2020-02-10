@@ -7,7 +7,7 @@ namespace SLeighT80.Processors.i8080
     public class i8080 : Processor
     {
         // Stack pointer
-        internal ushort SP = 0;
+        internal ushort SP;
 
         // Registers
         internal byte A;

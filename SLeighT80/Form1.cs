@@ -16,13 +16,16 @@ namespace SLeighT80
     public partial class Form1 : Form
     {
         // Our space invaders machine
-        i8080 machine = new i8080();
+        readonly i8080 m_machine = new i8080();
 
         // An 8080 machine code file
-        string filename = string.Empty;
+        string m_filename = string.Empty;
 
         // A cool (but basic) control I found that displays binary data in hex format
-        private ByteViewer byteviewer;
+        private readonly ByteViewer m_byteViewer;
+
+        // Set to true when in full screen mode
+        bool m_fullscreen;
 
         /// <summary>
         /// 
@@ -33,31 +36,29 @@ namespace SLeighT80
 
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
-           
             KeyPreview = true;
 
-            byteviewer = new ByteViewer();
-            byteviewer.Dock = DockStyle.Fill;
-            this.tabPage1.Controls.Add(byteviewer);
+            m_byteViewer = new ByteViewer { Dock = DockStyle.Fill };
+            tabPage1.Controls.Add(m_byteViewer);
 
             // Install the 8080 instruction set to this machine
-            i8080InstructionSet.Install(machine);
-            machine.Optimize();
+            i8080InstructionSet.Install(m_machine);
+            m_machine.Optimize();
 
             // Initialize XInput
             var controllers = new[] { new Controller(UserIndex.One), new Controller(UserIndex.Two), new Controller(UserIndex.Three), new Controller(UserIndex.Four) };
 
-            foreach (var selectControler in controllers)
+            foreach (var selectController in controllers)
             {
-                if (selectControler.IsConnected)
+                if (selectController.IsConnected)
                 {
-                    machine.controller = selectControler;
+                    m_machine.controller = selectController;
                     break;
                 }
             }
 
             int ic = 0;
-            foreach (var inst in machine.InstructionSet.Values)
+            foreach (var inst in m_machine.InstructionSet.Values)
             {
                 if (inst.ExecutionMethod != null)
                 {
@@ -68,7 +69,7 @@ namespace SLeighT80
             txt_Console.Text += "Loaded the 8080 instruction set\r\n";
             txt_Console.Text += "Implementation is ";
             txt_Console.Text += (100.0 * ic / 256.0).ToString();
-            txt_Console.Text += "% complete\r\n";            
+            txt_Console.Text += "% complete\r\n";
         }
 
         /// <summary>
@@ -79,7 +80,7 @@ namespace SLeighT80
         {
             string[] args = Environment.GetCommandLineArgs();
             bool fullScreen = false;
-            
+
             for (int i = 1; i < args.Length; ++i)
             {
                 if (args[i] == "-f")
@@ -95,42 +96,42 @@ namespace SLeighT80
                             // TODO, actuall unzip these files.
                             if (args[i + 1].Contains("invaders.zip"))
                             {
-                                Loader.LoadSpaceInvaders(machine);
+                                Loader.LoadSpaceInvaders(m_machine);
                                 StartEmulation();
                             }
                             if (args[i + 1].Contains("lrescue.zip"))
                             {
-                                Loader.LoadLunarRescue(machine);
+                                Loader.LoadLunarRescue(m_machine);
                                 StartEmulation();
                             }
                             if (args[i + 1].Contains("balloon.zip"))
                             {
-                                Loader.LoadBalloonWars(machine);
+                                Loader.LoadBalloonWars(m_machine);
                                 StartEmulation();
                             }
                             if (args[i + 1].Contains("galxwarst.zip"))
                             {
-                                Loader.LoadGalaxyWars(machine);
+                                Loader.LoadGalaxyWars(m_machine);
                                 StartEmulation();
                             }
                             if (args[i + 1].Contains("cosmo.zip"))
                             {
-                                Loader.LoadCosmo(machine);
+                                Loader.LoadCosmo(m_machine);
                                 StartEmulation();
                             }
                             if (args[i + 1].Contains("lupin3a.zip"))
                             {
-                                Loader.LoadLupin3(machine);
+                                Loader.LoadLupin3(m_machine);
                                 StartEmulation();
                             }
                             if (args[i + 1].Contains("ozmawars.zip"))
                             {
-                                Loader.LoadOsmaWars(machine);
+                                Loader.LoadOsmaWars(m_machine);
                                 StartEmulation();
                             }
                             if (args[i + 1].Contains("indianbt.zip"))
                             {
-                                Loader.LoadIndianBattle(machine);
+                                Loader.LoadIndianBattle(m_machine);
                                 StartEmulation();
                             }
                         }
@@ -140,7 +141,7 @@ namespace SLeighT80
             base.OnLoad(e);
             if (fullScreen)
             {
-                toggleFullscreen();
+                ToggleFullscreen();
             }
         }
 
@@ -155,22 +156,22 @@ namespace SLeighT80
             {
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    machine.Reset(0);
+                    m_machine.Reset(0);
 
-                    machine.HasConsole = true;
+                    m_machine.HasConsole = true;
 
-                    filename = ofd.FileName;
+                    m_filename = ofd.FileName;
 
-                    File.ReadAllBytes(ofd.FileName).CopyTo(machine.RAM, 0x100);
-                    machine.PC = 0x100;
-                    machine.IntallOutputRoutines();                   
+                    File.ReadAllBytes(ofd.FileName).CopyTo(m_machine.RAM, 0x100);
+                    m_machine.PC = 0x100;
+                    m_machine.IntallOutputRoutines();
 
                     tabControl1.SelectedIndex = 4;
                     txt_Console.Text += "\r\n";
 
-                    textBox1.Text = Disassembler.Disassemble(machine.RAM, machine.InstructionSet);
+                    textBox1.Text = Disassembler.Disassemble(m_machine.RAM, m_machine.InstructionSet);
 
-                    RefreshUI();
+                    RefreshDebugInformation();
                 }
             }
         }
@@ -178,52 +179,52 @@ namespace SLeighT80
         /// <summary>
         /// 
         /// </summary>
-        private void RefreshUI()
+        private void RefreshDebugInformation()
         {
-            txt_Register_A.Text = machine.A.ToString("x2");
-            txt_Register_B.Text = machine.B.ToString("x2");
-            txt_Register_C.Text = machine.C.ToString("x2");
-            txt_Register_D.Text = machine.D.ToString("x2");
-            txt_Register_E.Text = machine.E.ToString("x2");
-            txt_Register_F.Text = machine.F.ToString("x2");
-            txt_Register_H.Text = machine.H.ToString("x2");
-            txt_Register_L.Text = machine.L.ToString("x2");
+            txt_Register_A.Text = m_machine.A.ToString("x2");
+            txt_Register_B.Text = m_machine.B.ToString("x2");
+            txt_Register_C.Text = m_machine.C.ToString("x2");
+            txt_Register_D.Text = m_machine.D.ToString("x2");
+            txt_Register_E.Text = m_machine.E.ToString("x2");
+            txt_Register_F.Text = m_machine.F.ToString("x2");
+            txt_Register_H.Text = m_machine.H.ToString("x2");
+            txt_Register_L.Text = m_machine.L.ToString("x2");
 
-            txt_Pointer_IP.Text = machine.PC.ToString("x2");
-            txt_Pointer_SP.Text = machine.SP.ToString("x2");
+            txt_Pointer_IP.Text = m_machine.PC.ToString("x2");
+            txt_Pointer_SP.Text = m_machine.SP.ToString("x2");
 
-            txt_Port_1_In.Text = machine.PORT_IN_1.ToString("x2");
-            txt_Port_2_In.Text = machine.PORT_IN_2.ToString("x2");
+            txt_Port_1_In.Text = m_machine.PORT_IN_1.ToString("x2");
+            txt_Port_2_In.Text = m_machine.PORT_IN_2.ToString("x2");
             //txt_Port_3_In.Text = machine.PC.ToString("x2");
             //txt_Port_1_Out.Text = machine.PORT_OUT_1.ToString("x2");
-            txt_Port_3_Out.Text = machine.PORT_OUT_3.ToString("x2");
-            txt_Port_5_Out.Text = machine.PORT_OUT_5.ToString("x2");
+            txt_Port_3_Out.Text = m_machine.PORT_OUT_3.ToString("x2");
+            txt_Port_5_Out.Text = m_machine.PORT_OUT_5.ToString("x2");
 
 
-            checkBox1.Checked = (machine.F & (byte)i8080.Flags.S) != 0;
-            checkBox2.Checked = (machine.F & (byte)i8080.Flags.Z) != 0;
-            checkBox6.Checked = (machine.F & (byte)i8080.Flags.P) != 0;
-            checkBox7.Checked = (machine.F & 2) != 0;
-            checkBox8.Checked = (machine.F & (byte)i8080.Flags.C) != 0;
+            checkBox1.Checked = (m_machine.F & (byte)i8080.Flags.S) != 0;
+            checkBox2.Checked = (m_machine.F & (byte)i8080.Flags.Z) != 0;
+            checkBox6.Checked = (m_machine.F & (byte)i8080.Flags.P) != 0;
+            checkBox7.Checked = (m_machine.F & 2) != 0;
+            checkBox8.Checked = (m_machine.F & (byte)i8080.Flags.C) != 0;
 
-            byteviewer.SetBytes(machine.RAM);
+            m_byteViewer.SetBytes(m_machine.RAM);
 
             byte[] buf = new byte[100];
             Invalidate();
-            if (machine.PC < machine.RAM.Length - 100)
+            if (m_machine.PC < m_machine.RAM.Length - 100)
             {
-                Array.Copy(machine.RAM, machine.PC, buf, 0, 100);
+                Array.Copy(m_machine.RAM, m_machine.PC, buf, 0, 100);
             }
-            txt_NextInstruction.Text = Disassembler.Disassemble(buf, machine.InstructionSet, true, machine.PC);
-            txt_LocalRAM.Text = Disassembler.Disassemble(buf, machine.InstructionSet, false, machine.PC);
+            txt_NextInstruction.Text = Disassembler.Disassemble(buf, m_machine.InstructionSet, true, m_machine.PC);
+            txt_LocalRAM.Text = Disassembler.Disassemble(buf, m_machine.InstructionSet, false, m_machine.PC);
 
-            foreach (var line in machine.Console)
+            foreach (var line in m_machine.Console)
             {
                 txt_Console.Text += line;
             }
-            machine.Console.Clear();
+            m_machine.Console.Clear();
 
-            txt_CompletedInstructions.Text = machine.NumberOfExecutedInstructions.ToString() + "    /   " + machine.Cycles.ToString();
+            txt_CompletedInstructions.Text = m_machine.NumberOfExecutedInstructions.ToString() + "    /   " + m_machine.Cycles.ToString();
 
         }
 
@@ -234,7 +235,7 @@ namespace SLeighT80
         /// <param name="e"></param>
         private void assembleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Assembler.Assemble("C:\\Games\\8080\\a.out", txt_Assembly_Code.Text, machine.InstructionOpCodes);
+            Assembler.Assemble("C:\\Games\\8080\\a.out", txt_Assembly_Code.Text, m_machine.InstructionOpCodes);
         }
 
         /// <summary>
@@ -244,9 +245,9 @@ namespace SLeighT80
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-            machine.RunNext();
-            RefreshUI();
-        }   
+            m_machine.RunNext();
+            RefreshDebugInformation();
+        }
 
         /// <summary>
         /// 
@@ -265,9 +266,9 @@ namespace SLeighT80
             {
                 for (int i = 0; i < steps; ++i)
                 {
-                    if (machine.On)
+                    if (m_machine.On)
                     {
-                        machine.RunNext();
+                        m_machine.RunNext();
                     }
                     else
                     {
@@ -275,7 +276,7 @@ namespace SLeighT80
                     }
                 }
             }
-            RefreshUI();
+            RefreshDebugInformation();
         }
 
         /// <summary>
@@ -285,13 +286,13 @@ namespace SLeighT80
         /// <param name="e"></param>
         private void button3_Click(object sender, EventArgs e)
         {
-            machine.Reset(0);
+            m_machine.Reset(0);
 
-            File.ReadAllBytes(filename).CopyTo(machine.RAM, 0x100);
+            File.ReadAllBytes(m_filename).CopyTo(m_machine.RAM, 0x100);
 
-            textBox1.Text = Disassembler.Disassemble(machine.RAM, machine.InstructionSet);
+            textBox1.Text = Disassembler.Disassemble(m_machine.RAM, m_machine.InstructionSet);
             txt_CompletedInstructions.Text = "";
-            RefreshUI();
+            RefreshDebugInformation();
         }
 
         /// <summary>
@@ -300,9 +301,9 @@ namespace SLeighT80
         /// <param name="e"></param>
         protected override void OnPaintBackground(PaintEventArgs e)
         {
-            if (machine != null)
+            if (m_machine != null)
             {
-                if (machine.On)
+                if (m_machine.On)
                 {
                     return;
                 }
@@ -313,16 +314,16 @@ namespace SLeighT80
         /// <summary>
         /// 
         /// </summary>
-        private bool _CursorShown = true;
+        private bool m_cursorShown = true;
         public bool CursorShown
         {
             get
             {
-                return _CursorShown;
+                return m_cursorShown;
             }
             set
             {
-                if (value == _CursorShown)
+                if (value == m_cursorShown)
                 {
                     return;
                 }
@@ -336,7 +337,7 @@ namespace SLeighT80
                     Cursor.Hide();
                 }
 
-                _CursorShown = value;
+                m_cursorShown = value;
             }
         }
 
@@ -346,9 +347,9 @@ namespace SLeighT80
         /// <param name="e"></param>
         protected override void OnPaint(PaintEventArgs e)
         {
-            if (machine != null)
+            if (m_machine != null)
             {
-                if (machine.On)
+                if (m_machine.On)
                 {
                     e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
                     e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
@@ -356,29 +357,8 @@ namespace SLeighT80
                     e.Graphics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
                     e.Graphics.PixelOffsetMode = PixelOffsetMode.HighSpeed;
 
-                    //Speed
-                    //e.Graphics.InterpolationMode = InterpolationMode.Low;
-                    //e.Graphics.CompositingQuality = CompositingQuality.HighSpeed;
-                    //e.Graphics.SmoothingMode = SmoothingMode.HighSpeed;
-                    //e.Graphics.TextRenderingHint = TextRenderingHint.SystemDefault;
-                    //e.Graphics.PixelOffsetMode = PixelOffsetMode.HighSpeed;
-
-                    //Quality
-                    //e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    //e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
-                    //e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-                    //e.Graphics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
-                    //e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-                    Machines.Invaders.Screen.Paint(e.Graphics, machine, ClientRectangle, menuStrip1.Height, machine.ScaleFactor);
-                    if (fullscreen)
-                    {
-                        CursorShown = false;
-                    }
-                    else
-                    {
-                        CursorShown = true;
-                    }
+                    Machines.Invaders.Screen.Paint(e.Graphics, m_machine, ClientRectangle, menuStrip1.Height, m_machine.ScaleFactor);
+                    CursorShown = !m_fullscreen;
                     Invalidate();
                     return;
                 }
@@ -394,12 +374,12 @@ namespace SLeighT80
             StopEmulation();
             Thread.Sleep(20);
 
-            machine.On = true;
+            m_machine.On = true;
             btn_Next.Enabled = false;
             btn_Next_N.Enabled = false;
 
-            Thread t = new Thread(() => Run(machine));
-            this.tableLayoutPanel7.Visible = false;
+            Thread t = new Thread(() => Run(m_machine));
+            tableLayoutPanel7.Visible = false;
             Invalidate();
             t.Start();
         }
@@ -442,41 +422,41 @@ namespace SLeighT80
             }
             else if (e.KeyData == Keys.F11)
             {
-                toggleFullscreen();
+                ToggleFullscreen();
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.C)
             {
-                machine.PORT_IN_1 |= 0x01;
+                m_machine.PORT_IN_1 |= 0x01;
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.D1)
             {
-                machine.PORT_IN_1 |= 0x04;  // 1P
+                m_machine.PORT_IN_1 |= 0x04;  // 1P
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.D2)
             {
-                machine.PORT_IN_1 |= 0x02;  // 1P
+                m_machine.PORT_IN_1 |= 0x02;  // 1P
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.Left)
             {
-                machine.PORT_IN_1 |= 0x20;
+                m_machine.PORT_IN_1 |= 0x20;
                 // Can't move left and right at the same time 
-                machine.PORT_IN_1 = unchecked((byte)(machine.PORT_IN_1 & (byte)~0x40));
+                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x40));
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.Right)
             {
-                machine.PORT_IN_1 |= 0x40;
+                m_machine.PORT_IN_1 |= 0x40;
                 // Can't move left and right at the same time 
-                machine.PORT_IN_1 = unchecked((byte)(machine.PORT_IN_1 & (byte)~0x20));
+                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x20));
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.Space)
             {
-                machine.PORT_IN_1 |= 0x10;
+                m_machine.PORT_IN_1 |= 0x10;
                 e.Handled = true;
             }
         }
@@ -489,43 +469,43 @@ namespace SLeighT80
         {
             if (e.KeyData == Keys.C)
             {
-                machine.PORT_IN_1 = unchecked((byte)(machine.PORT_IN_1 & (byte)~0x01));
+                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x01));
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.D1)
             {
-                machine.PORT_IN_1 = unchecked((byte)(machine.PORT_IN_1 & (byte)~0x04));
+                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x04));
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.Left)
             {
-                machine.PORT_IN_1 = unchecked((byte)(machine.PORT_IN_1 & (byte)~0x20));
+                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x20));
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.Right)
             {
-                machine.PORT_IN_1 = unchecked((byte)(machine.PORT_IN_1 & (byte)~0x40));
+                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x40));
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.Space)
             {
-                machine.PORT_IN_1 = unchecked((byte)(machine.PORT_IN_1 & (byte)~0x10));
+                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x10));
                 e.Handled = true;
             }
 
             base.OnKeyUp(e);
-        }   
+        }
 
         /// <summary>
         /// 
         /// </summary>
         private void StopEmulation()
         {
-            this.tableLayoutPanel7.Visible = true;
-            machine.On = false;
+            tableLayoutPanel7.Visible = true;
+            m_machine.On = false;
             btn_Next.Enabled = true;
             btn_Next_N.Enabled = true;
-            RefreshUI();
+            RefreshDebugInformation();
         }
 
         /// <summary>
@@ -558,7 +538,7 @@ namespace SLeighT80
                 if (c % 100 == 0)
                 {
                     t = sw.ElapsedTicks;
-                    
+
                 }
 
                 //if (c % 250 == 0)
@@ -579,7 +559,7 @@ namespace SLeighT80
             }
         }
 
-      
+
         /// <summary>
         /// 
         /// </summary>
@@ -587,8 +567,8 @@ namespace SLeighT80
         /// <param name="e"></param>
         private void lunarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Loader.LoadLunarRescue(machine);
-            RefreshUI();
+            Loader.LoadLunarRescue(m_machine);
+            RefreshDebugInformation();
             StartEmulation();
         }
 
@@ -599,8 +579,8 @@ namespace SLeighT80
         /// <param name="e"></param>
         private void balloonToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Loader.LoadBalloonWars(machine);
-            RefreshUI();
+            Loader.LoadBalloonWars(m_machine);
+            RefreshDebugInformation();
             StartEmulation();
         }
 
@@ -611,8 +591,8 @@ namespace SLeighT80
         /// <param name="e"></param>
         private void invadersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Loader.LoadSpaceInvaders(machine);
-            RefreshUI();
+            Loader.LoadSpaceInvaders(m_machine);
+            RefreshDebugInformation();
             StartEmulation();
         }
 
@@ -623,8 +603,8 @@ namespace SLeighT80
         /// <param name="e"></param>
         private void galaxyWarsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Loader.LoadGalaxyWars(machine);
-            RefreshUI();
+            Loader.LoadGalaxyWars(m_machine);
+            RefreshDebugInformation();
             StartEmulation();
         }
 
@@ -665,7 +645,7 @@ namespace SLeighT80
         /// <param name="e"></param>
         private void button4_Click(object sender, EventArgs e)
         {
-            Tests.Run(machine);
+            Tests.Run(m_machine);
             if (Tests.FailCount > 0)
             {
                 MessageBox.Show(this, "There were failures.", "Error!");
@@ -683,34 +663,33 @@ namespace SLeighT80
         /// <param name="e"></param>
         private void fullScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            toggleFullscreen();
+            ToggleFullscreen();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        void toggleFullscreen()
+        void ToggleFullscreen()
         {
-            if (!fullscreen)
+            if (!m_fullscreen)
             {
-                this.TopMost = true;
-                this.FormBorderStyle = FormBorderStyle.None;
-                this.WindowState = FormWindowState.Maximized;
-                machine.ScaleFactor = 4;
+                TopMost = true;
+                FormBorderStyle = FormBorderStyle.None;
+                WindowState = FormWindowState.Maximized;
+                m_machine.ScaleFactor = 4;
                 menuStrip1.Visible = false;
                 Refresh();
             }
             else
             {
-                this.WindowState = FormWindowState.Normal;
-                this.FormBorderStyle = FormBorderStyle.FixedSingle;
-                machine.ScaleFactor = 3;
+                WindowState = FormWindowState.Normal;
+                FormBorderStyle = FormBorderStyle.FixedSingle;
+                m_machine.ScaleFactor = 3;
                 menuStrip1.Visible = true;
                 Refresh();
             }
-            fullscreen = !fullscreen;
-             
+            m_fullscreen = !m_fullscreen;
+
         }
-        bool fullscreen = false;
     }
 }
