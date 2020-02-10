@@ -8,25 +8,25 @@ namespace SLeighT80.Processors
         /// <summary>
         /// Turns machine code in assembly language
         /// </summary>
-        /// <param name="codebuffer"></param>
+        /// <param name="buffer"></param>
         /// <param name="instructionSet"></param>
-        /// <param name="Mnumonic"></param>
+        /// <param name="mnemonic"></param>
         /// <param name="offset"></param>
         /// <returns></returns>
-        public static string Disassemble(byte[] codebuffer, Dictionary<int, Instruction> instructionSet, bool Mnumonic = true, int offset = 0)
+        public static string Disassemble(byte[] buffer, Dictionary<int, Instruction> instructionSet, bool mnemonic = true, int offset = 0)
         {
             StringBuilder sb = new StringBuilder();
 
-            int IP = 0;
+            int programCounter = 0;
 
-            while (IP < codebuffer.Length)
+            while (programCounter < buffer.Length)
             {
-                byte code = codebuffer[IP];
-                sb.AppendFormat("{0:X4} ", IP + offset);
+                byte code = buffer[programCounter];
+                sb.AppendFormat("{0:X4} ", programCounter + offset);
                 Instruction instruction;
                 if (instructionSet.TryGetValue(code, out instruction))
                 {
-                    if (Mnumonic)
+                    if (mnemonic)
                     {
                         sb.AppendFormat(instruction.Mnemonic);
                     }
@@ -36,19 +36,19 @@ namespace SLeighT80.Processors
                     }
                     if (instruction.Length > 1)
                     {
-                        if (IP + 1 < codebuffer.Length)
+                        if (programCounter + 1 < buffer.Length)
                         {
-                            sb.AppendFormat("\t{0:X2}", codebuffer[IP + 1]);
+                            sb.AppendFormat("\t{0:X2}", buffer[programCounter + 1]);
                         }
                     }
                     if (instruction.Length > 2)
                     {
-                        if (IP + 2 < codebuffer.Length)
+                        if (programCounter + 2 < buffer.Length)
                         {
-                            sb.AppendFormat("\t{0:X2}", codebuffer[IP + 2]);
+                            sb.AppendFormat("\t{0:X2}", buffer[programCounter + 2]);
                         }
                     }
-                    IP += instruction.Length;
+                    programCounter += instruction.Length;
                 }
                 else
                 {

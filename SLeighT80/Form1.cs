@@ -57,9 +57,9 @@ namespace SLeighT80
             }
 
             int ic = 0;
-            foreach (var inst in machine.instructionSet.Values)
+            foreach (var inst in machine.InstructionSet.Values)
             {
-                if (inst.m_ExecutionMethod != null)
+                if (inst.ExecutionMethod != null)
                 {
                     ic++;
                 }
@@ -168,7 +168,7 @@ namespace SLeighT80
                     tabControl1.SelectedIndex = 4;
                     txt_Console.Text += "\r\n";
 
-                    textBox1.Text = Disassembler.Disassemble(machine.RAM, machine.instructionSet);
+                    textBox1.Text = Disassembler.Disassemble(machine.RAM, machine.InstructionSet);
 
                     RefreshUI();
                 }
@@ -214,8 +214,8 @@ namespace SLeighT80
             {
                 Array.Copy(machine.RAM, machine.PC, buf, 0, 100);
             }
-            txt_NextInstruction.Text = Disassembler.Disassemble(buf, machine.instructionSet, true, machine.PC);
-            txt_LocalRAM.Text = Disassembler.Disassemble(buf, machine.instructionSet, false, machine.PC);
+            txt_NextInstruction.Text = Disassembler.Disassemble(buf, machine.InstructionSet, true, machine.PC);
+            txt_LocalRAM.Text = Disassembler.Disassemble(buf, machine.InstructionSet, false, machine.PC);
 
             foreach (var line in machine.Console)
             {
@@ -234,7 +234,7 @@ namespace SLeighT80
         /// <param name="e"></param>
         private void assembleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Assembler.Assemble("C:\\Games\\8080\\a.out", txt_Assembly_Code.Text, machine.instructionOpCodes);
+            Assembler.Assemble("C:\\Games\\8080\\a.out", txt_Assembly_Code.Text, machine.InstructionOpCodes);
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace SLeighT80
 
             File.ReadAllBytes(filename).CopyTo(machine.RAM, 0x100);
 
-            textBox1.Text = Disassembler.Disassemble(machine.RAM, machine.instructionSet);
+            textBox1.Text = Disassembler.Disassemble(machine.RAM, machine.InstructionSet);
             txt_CompletedInstructions.Text = "";
             RefreshUI();
         }

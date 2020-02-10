@@ -8,7 +8,7 @@ namespace SLeighT80.Processors
         // Is this thing on?
         internal bool On = false;
 
-        // Interupts will only be processed when true, set / cleared by EI and DI
+        // Interrupts will only be processed when true, set / cleared by EI and DI
         internal bool InterruptsEnabled = false;
 
         // The number of instructions that have been executed
@@ -18,19 +18,20 @@ namespace SLeighT80.Processors
         internal UInt64 Cycles = 0;
 
         // Instruction lookup tables (By OpCode) handy for debugging and writing assemblers only
-        internal Dictionary<int, Instruction> instructionSet = new Dictionary<int, Instruction>();
+        internal Dictionary<int, Instruction> InstructionSet = new Dictionary<int, Instruction>();
 
-        // Instruction lookup tables (By Mnumonic) handy for debugging and writing assemblers only
-        internal Dictionary<string, Instruction> instructionOpCodes = new Dictionary<string, Instruction>();
+        // Instruction lookup tables (By Mnemonic) handy for debugging and writing assemblers only
+        internal Dictionary<string, Instruction> InstructionOpCodes = new Dictionary<string, Instruction>();
+
+        // Optimized op codes
+        internal bool[] Codes = new bool[256];
 
         // Internal string
         internal List<string> Console = new List<string>();
 
-        public static bool[] parityLookUp = new bool[256];
+        internal static bool[] ParityLookUp = new bool[256];
 
-        protected static Instruction[] opcodes;
-
-        internal bool[] codes = new bool[256];
+        protected static Instruction[] OpCodes;
 
         // Random access memory
         internal byte[] RAM;
@@ -42,18 +43,18 @@ namespace SLeighT80.Processors
         internal bool InterruptPending;
 
         // The operation that will be executed when the next interrupt is triggered
-        internal byte InterrupOperation;
+        internal byte InterruptOperation;
 
 
         /// <summary>
-        /// Will create an array the can be directly addressed via opcode
+        /// Will create an array the can be directly addressed via op-code
         /// </summary>
         public void Optimize()
         {
-            opcodes = new Instruction[instructionSet.Count];
-            foreach (var v in instructionSet)
+            OpCodes = new Instruction[InstructionSet.Count];
+            foreach (var v in InstructionSet)
             {
-                opcodes[v.Key] = v.Value;
+                OpCodes[v.Key] = v.Value;
             }
         }
 
@@ -63,10 +64,10 @@ namespace SLeighT80.Processors
         /// <param name="instruction"></param>
         public void AddInstruction(Instruction instruction)
         {
-            instructionSet.Add(instruction.OpCode, instruction);
-            if (!instructionOpCodes.ContainsKey(instruction.Mnemonic))
+            InstructionSet.Add(instruction.OpCode, instruction);
+            if (!InstructionOpCodes.ContainsKey(instruction.Mnemonic))
             {
-                instructionOpCodes.Add(instruction.Mnemonic, instruction);
+                InstructionOpCodes.Add(instruction.Mnemonic, instruction);
             }
         }
     }

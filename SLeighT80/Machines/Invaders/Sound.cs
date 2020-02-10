@@ -11,14 +11,14 @@ namespace SLeighT80.Machines.Invaders
     class Sound
     {
         // Use this for any looping sounds
-        private static SoundPlayer loopingSound;
+        private static SoundPlayer m_loopingSound;
 
         // Remember the last port
-        private static byte last_out_port5;
+        private static byte m_lastOutPort5;
 
-        internal static byte last_out_port3;
+        internal static byte LastOutPort3;
 
-        private static string[] port3sounds = new string[]
+        private static readonly string[] Port3Sounds =
         {
             "0.wav",
             "1.wav",
@@ -27,7 +27,7 @@ namespace SLeighT80.Machines.Invaders
             "9.wav",
         };
 
-        private static string[] port5sounds = new string[]
+        private static readonly string[] Port5Sounds =
         {
             "4.wav",
             "5.wav",
@@ -37,32 +37,32 @@ namespace SLeighT80.Machines.Invaders
         };
 
         /// <summary>
-        /// Call the from the IN instruction to play the sounds as per the original hardwares sound board
+        /// Call the from the IN instruction to play the sounds as per the original hardware's sound board
         /// </summary>
         /// <param name="machine"></param>
         internal static void PlaySounds(i8080 machine)
         {
-            if (machine.PORT_OUT_3 != last_out_port3)
+            if (machine.PORT_OUT_3 != LastOutPort3)
             {
-                if ((machine.PORT_OUT_3 & 0x1) != 0 && (last_out_port3 & 0x1) == 0)
+                if ((machine.PORT_OUT_3 & 0x1) != 0 && (LastOutPort3 & 0x1) == 0)
                 {
-                    PlayLoopingSoundFile(port3sounds[0]);
+                    PlayLoopingSoundFile(Port3Sounds[0]);
                 }
-                else if ((machine.PORT_OUT_3 & 0x1) == 0 && (last_out_port3 & 0x1) != 0)
+                else if ((machine.PORT_OUT_3 & 0x1) == 0 && (LastOutPort3 & 0x1) != 0)
                 {
                     StopLoopingSoundFile();
                 }
                 else
                 {
-                    PlaySound(machine.PORT_OUT_3, last_out_port3, port3sounds, true);
+                    PlaySound(machine.PORT_OUT_3, LastOutPort3, Port3Sounds, true);
                 }
-                last_out_port3 = machine.PORT_OUT_3;
+                LastOutPort3 = machine.PORT_OUT_3;
             }
 
-            if (machine.PORT_OUT_5 != last_out_port5)
+            if (machine.PORT_OUT_5 != m_lastOutPort5)
             {
-                PlaySound(machine.PORT_OUT_5, last_out_port5, port5sounds, true);
-                last_out_port5 = machine.PORT_OUT_5;
+                PlaySound(machine.PORT_OUT_5, m_lastOutPort5, Port5Sounds, true);
+                m_lastOutPort5 = machine.PORT_OUT_5;
             }
         }
 
@@ -72,6 +72,7 @@ namespace SLeighT80.Machines.Invaders
         /// <param name="port"></param>
         /// <param name="lastPort"></param>
         /// <param name="soundTable"></param>
+        /// <param name="threaded"></param>
         private static void PlaySound(byte port, byte lastPort, string[] soundTable, bool threaded = false)
         {
             for (int i = 0; i < 5; ++i)
@@ -113,7 +114,7 @@ namespace SLeighT80.Machines.Invaders
                 }
                 catch (Exception)
                 {
-
+                    // Log
                 }
             }
         }
@@ -150,8 +151,8 @@ namespace SLeighT80.Machines.Invaders
             {
                 try
                 {
-                    loopingSound = new SoundPlayer(strAudioFilePath);
-                    ThreadPool.QueueUserWorkItem(a => loopingSound.PlayLooping());
+                    m_loopingSound = new SoundPlayer(strAudioFilePath);
+                    ThreadPool.QueueUserWorkItem(a => m_loopingSound.PlayLooping());
                 }
                 catch (Exception)
                 {
@@ -165,10 +166,7 @@ namespace SLeighT80.Machines.Invaders
         /// </summary>
         private static void StopLoopingSoundFile()
         {
-            if (loopingSound != null)
-            {
-                loopingSound.Stop();
-            }
+            m_loopingSound?.Stop();
         }
     }
 }

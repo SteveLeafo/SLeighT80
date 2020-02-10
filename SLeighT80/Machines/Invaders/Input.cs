@@ -6,13 +6,13 @@ namespace SLeighT80.Machines.Invaders
     class Input
     {
         // The current controller state, helps to differentiate between keyboard and controllers
-        private static ushort controllerState = 0x0000;
+        private static ushort m_controllerState;
 
         // Set true if we are using the control stick to move left
-        private static bool stickLeft = false;
+        private static bool m_stickLeft;
 
         // Set true if we are using the control stick to move right
-        private static bool stickRight = false;
+        private static bool m_stickRight;
         
         // This will send values to the Input port in response to controller actions
         public static void Check(i8080 machine)
@@ -42,14 +42,14 @@ namespace SLeighT80.Machines.Invaders
             if ((state.Gamepad.Buttons & flag) != 0)
             {
                 machine.PORT_IN_1 |= portByte;
-                controllerState |= (ushort)flag;
+                m_controllerState |= (ushort)flag;
             }
             else
             {
-                if ((controllerState & (ushort)flag) != 0)
+                if ((m_controllerState & (ushort)flag) != 0)
                 {
                     machine.PORT_IN_1 = unchecked((byte)(machine.PORT_IN_1 & (byte)~portByte));
-                    controllerState = unchecked((ushort)(controllerState & (ushort)~flag));
+                    m_controllerState = unchecked((ushort)(m_controllerState & (ushort)~flag));
                 }
             }
         }
@@ -64,24 +64,24 @@ namespace SLeighT80.Machines.Invaders
             if (state.Gamepad.LeftThumbX > Gamepad.LeftThumbDeadZone)
             {
                 machine.PORT_IN_1 |= 0x40;
-                stickRight = true;
+                m_stickRight = true;
             }
             else if (state.Gamepad.LeftThumbX < -Gamepad.LeftThumbDeadZone)
             {
                 machine.PORT_IN_1 |= 0x20;
-                stickLeft = true;
+                m_stickLeft = true;
             }
             else
             {
-                if (stickRight)
+                if (m_stickRight)
                 {
                     machine.PORT_IN_1 = unchecked((byte)(machine.PORT_IN_1 & (byte)~0x40));
-                    stickRight = false;
+                    m_stickRight = false;
                 }
-                else if (stickLeft)
+                else if (m_stickLeft)
                 {
                     machine.PORT_IN_1 = unchecked((byte)(machine.PORT_IN_1 & (byte)~0x20));
-                    stickLeft = false;
+                    m_stickLeft = false;
                 }
             }
         }

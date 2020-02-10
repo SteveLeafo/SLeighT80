@@ -65,7 +65,7 @@ namespace SLeighT80.Processors.i8080
             RAM = new byte[65536];
             for (int b = 0x00; b <= 0xff; ++b)
             {
-                parityLookUp[b] = Utilities.Parity(b, 8);
+                ParityLookUp[b] = Utilities.Parity(b, 8);
             }
         }
 
@@ -78,12 +78,12 @@ namespace SLeighT80.Processors.i8080
             {
                 InterruptPending = false;
                 InterruptsEnabled = false;
-                Instruction instruction = opcodes[InterrupOperation];
+                Instruction instruction = OpCodes[InterruptOperation];
 
                 if (PC < RAM.Length - 2)
                 {
                     instruction.Execute(this, RAM[PC + 1], RAM[PC + 2]);
-                    codes[instruction.OpCode] = true;
+                    Codes[instruction.OpCode] = true;
                     Cycles = Cycles = (UInt64)instruction.Cycles;
                 }
             }
@@ -121,7 +121,7 @@ namespace SLeighT80.Processors.i8080
             }
 
             InterruptPending = true;
-            InterrupOperation = opcode;
+            InterruptOperation = opcode;
 
             return true;
         }
@@ -159,7 +159,7 @@ namespace SLeighT80.Processors.i8080
             SHIFT_OFFSET = 0;
 
             InterruptsEnabled = false;
-            InterrupOperation = 0;
+            InterruptOperation = 0;
 
             NumberOfExecutedInstructions = 0;
 
@@ -177,8 +177,8 @@ namespace SLeighT80.Processors.i8080
         private void Execute()
         {
             byte code = RAM[PC++];
-            codes[code] = true;
-            Instruction instruction = opcodes[code];
+            Codes[code] = true;
+            Instruction instruction = OpCodes[code];
 
             if (PC < RAM.Length - 2)
             {
@@ -367,7 +367,7 @@ namespace SLeighT80.Processors.i8080
         {
             if (value == 0) SetFlag(Flags.Z); else ClearFlag(Flags.Z);
             if (0x80 == (value & 0x80)) SetFlag(Flags.S); else ClearFlag(Flags.S);
-            if (parityLookUp[value]) SetFlag(Flags.P); else ClearFlag(Flags.P);
+            if (ParityLookUp[value]) SetFlag(Flags.P); else ClearFlag(Flags.P);
 
             if (rule == AccessoryFlagRule.Inc)
             {

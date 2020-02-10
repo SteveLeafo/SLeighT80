@@ -1,5 +1,4 @@
-﻿using SLeighT80.Processors;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 
@@ -27,7 +26,6 @@ namespace SLeighT80.Processors
 
                     foreach (var line in lines)
                     {
-                        string mnumonic = line.Trim();
                         byte b1 = 0;
                         byte b2 = 0;
 
@@ -38,7 +36,7 @@ namespace SLeighT80.Processors
                             Instruction instruction;
                             if (instructionOpCodes.TryGetValue(tokens[0], out instruction))
                             {
-                                // We have a valid instruction mnumonic
+                                // We have a valid instruction mnemonic
                                 if (tokens.Length > 1)
                                 {
                                     byte.TryParse(tokens[1].Trim().Replace("0x", ""), NumberStyles.HexNumber, null, out b1);
@@ -48,14 +46,19 @@ namespace SLeighT80.Processors
                                     byte.TryParse(tokens[2].Trim().Replace("0x", ""), NumberStyles.HexNumber, null, out b2);
                                 }
                             }
-                            writer.Write(instruction.OpCode);
-                            if (instruction.Length > 1)
+
+                            if (instruction != null)
                             {
-                                writer.Write(b1);
-                            }
-                            if (instruction.Length > 2)
-                            {
-                                writer.Write(b2);
+                                writer.Write(instruction.OpCode);
+                                if (instruction.Length > 1)
+                                {
+                                    writer.Write(b1);
+                                }
+
+                                if (instruction.Length > 2)
+                                {
+                                    writer.Write(b2);
+                                }
                             }
                         }
                     }
