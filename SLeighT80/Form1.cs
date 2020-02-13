@@ -10,6 +10,9 @@ using SharpDX.XInput;
 using SLeighT80.Machines.Invaders;
 using SLeighT80.Processors.i8080;
 using SLeighT80.Processors;
+using System.Collections.Generic;
+using System.IO.Compression;
+using System.Linq;
 
 namespace SLeighT80
 {
@@ -78,6 +81,8 @@ namespace SLeighT80
         /// <param name="e"></param>
         protected override void OnLoad(EventArgs e)
         {
+            Loader.UpdateSupportedGames();
+
             string[] args = Environment.GetCommandLineArgs();
             bool fullScreen = false;
 
@@ -93,45 +98,10 @@ namespace SLeighT80
                     {
                         if (File.Exists(args[i + 1]))
                         {
-                            // TODO, actuall unzip these files.
-                            if (args[i + 1].Contains("invaders.zip"))
+                            if (Path.GetExtension(args[i + 1]).ToUpper().Contains("ZIP"))
                             {
-                                Loader.LoadSpaceInvaders(m_machine);
-                                StartEmulation();
-                            }
-                            if (args[i + 1].Contains("lrescue.zip"))
-                            {
-                                Loader.LoadLunarRescue(m_machine);
-                                StartEmulation();
-                            }
-                            if (args[i + 1].Contains("balloon.zip"))
-                            {
-                                Loader.LoadBalloonWars(m_machine);
-                                StartEmulation();
-                            }
-                            if (args[i + 1].Contains("galxwarst.zip"))
-                            {
-                                Loader.LoadGalaxyWars(m_machine);
-                                StartEmulation();
-                            }
-                            if (args[i + 1].Contains("cosmo.zip"))
-                            {
-                                Loader.LoadCosmo(m_machine);
-                                StartEmulation();
-                            }
-                            if (args[i + 1].Contains("lupin3a.zip"))
-                            {
-                                Loader.LoadLupin3(m_machine);
-                                StartEmulation();
-                            }
-                            if (args[i + 1].Contains("ozmawars.zip"))
-                            {
-                                Loader.LoadOsmaWars(m_machine);
-                                StartEmulation();
-                            }
-                            if (args[i + 1].Contains("indianbt.zip"))
-                            {
-                                Loader.LoadIndianBattle(m_machine);
+                                StopEmulation();
+                                OpenZipFile(args[i + 1]);
                                 StartEmulation();
                             }
                         }
@@ -156,23 +126,71 @@ namespace SLeighT80
             {
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    m_machine.Reset(0);
+                    if (Path.GetExtension(ofd.FileName).ToUpper().Contains("ZIP"))
+                    {
+                        OpenZipFile(ofd.FileName);
+                    }
+                    else
+                    {
+                        m_machine.Reset(0);
 
-                    m_machine.HasConsole = true;
+                        m_machine.HasConsole = true;
 
-                    m_filename = ofd.FileName;
+                        m_filename = ofd.FileName;
 
-                    File.ReadAllBytes(ofd.FileName).CopyTo(m_machine.RAM, 0x100);
-                    m_machine.PC = 0x100;
-                    m_machine.IntallOutputRoutines();
+                        File.ReadAllBytes(ofd.FileName).CopyTo(m_machine.RAM, 0x100);
+                        m_machine.PC = 0x100;
+                        m_machine.IntallOutputRoutines();
 
-                    tabControl1.SelectedIndex = 4;
-                    txt_Console.Text += "\r\n";
+                        tabControl1.SelectedIndex = 4;
+                        txt_Console.Text += "\r\n";
 
-                    textBox1.Text = Disassembler.Disassemble(m_machine.RAM, m_machine.InstructionSet);
+                        textBox1.Text = Disassembler.Disassemble(m_machine.RAM, m_machine.InstructionSet);
 
-                    RefreshDebugInformation();
+                        RefreshDebugInformation();
+                    }
                 }
+            }
+        }
+
+        void OpenZipFile(string fileName)
+        {
+            List<KeyValuePair<string, int>> data;
+
+            if (Loader.SupportedGames.TryGetValue(Path.GetFileName(fileName), out data))
+            {
+                using (var file = File.OpenRead(fileName))
+                using (var zip = new ZipArchive(file, ZipArchiveMode.Read))
+                {
+                    try
+                    {
+                        m_machine.Reset(0);
+                        foreach (var f in data)
+                        {
+                            ZipArchiveEntry entry = zip.Entries.FirstOrDefault(a => a.Name == f.Key);
+                            if (entry != null)
+                            {
+                                using (var stream = entry.Open())
+                                {
+                                    using (var memoryStream = new MemoryStream())
+                                    {
+                                        stream.CopyTo(memoryStream);
+                                        memoryStream.ToArray().CopyTo(m_machine.RAM, f.Value); ;
+                                    }
+                                }
+                            }
+                        }
+                        StartEmulation();
+                    }
+                    catch(Exception)
+                    {
+                        MessageBox.Show("Error loading game");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Unsupported game");
             }
         }
 
@@ -400,27 +418,7 @@ namespace SLeighT80
         /// <param name="e"></param>
         private void CheckKeyboard(KeyEventArgs e)
         {
-            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.D1)
-            {
-                lunarToolStripMenuItem_Click(this, null);
-                e.Handled = true;
-            }
-            else if (e.Modifiers == Keys.Control && e.KeyCode == Keys.D2)
-            {
-                balloonToolStripMenuItem_Click(this, null);
-                e.Handled = true;
-            }
-            else if (e.Modifiers == Keys.Control && e.KeyCode == Keys.D3)
-            {
-                invadersToolStripMenuItem_Click(this, null);
-                e.Handled = true;
-            }
-            else if (e.Modifiers == Keys.Control && e.KeyCode == Keys.D4)
-            {
-                galaxyWarsToolStripMenuItem_Click(this, null);
-                e.Handled = true;
-            }
-            else if (e.KeyData == Keys.F11)
+            if (e.KeyData == Keys.F11)
             {
                 ToggleFullscreen();
                 e.Handled = true;
@@ -557,55 +555,6 @@ namespace SLeighT80
                 }
                 c++;
             }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void lunarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Loader.LoadLunarRescue(m_machine);
-            RefreshDebugInformation();
-            StartEmulation();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void balloonToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Loader.LoadBalloonWars(m_machine);
-            RefreshDebugInformation();
-            StartEmulation();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void invadersToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Loader.LoadSpaceInvaders(m_machine);
-            RefreshDebugInformation();
-            StartEmulation();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void galaxyWarsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Loader.LoadGalaxyWars(m_machine);
-            RefreshDebugInformation();
-            StartEmulation();
         }
 
         /// <summary>

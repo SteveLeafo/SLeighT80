@@ -35,10 +35,6 @@ namespace SLeighT80
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lunarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.balloonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.invadersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.galaxyWarsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.assemblerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openASMFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.assembleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -198,11 +194,7 @@ namespace SLeighT80
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem,
-            this.lunarToolStripMenuItem,
-            this.balloonToolStripMenuItem,
-            this.invadersToolStripMenuItem,
-            this.galaxyWarsToolStripMenuItem});
+            this.openToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -213,34 +205,6 @@ namespace SLeighT80
             this.openToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
-            // 
-            // lunarToolStripMenuItem
-            // 
-            this.lunarToolStripMenuItem.Name = "lunarToolStripMenuItem";
-            this.lunarToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
-            this.lunarToolStripMenuItem.Text = "Lunar";
-            this.lunarToolStripMenuItem.Click += new System.EventHandler(this.lunarToolStripMenuItem_Click);
-            // 
-            // balloonToolStripMenuItem
-            // 
-            this.balloonToolStripMenuItem.Name = "balloonToolStripMenuItem";
-            this.balloonToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
-            this.balloonToolStripMenuItem.Text = "Balloon";
-            this.balloonToolStripMenuItem.Click += new System.EventHandler(this.balloonToolStripMenuItem_Click);
-            // 
-            // invadersToolStripMenuItem
-            // 
-            this.invadersToolStripMenuItem.Name = "invadersToolStripMenuItem";
-            this.invadersToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
-            this.invadersToolStripMenuItem.Text = "Invaders";
-            this.invadersToolStripMenuItem.Click += new System.EventHandler(this.invadersToolStripMenuItem_Click);
-            // 
-            // galaxyWarsToolStripMenuItem
-            // 
-            this.galaxyWarsToolStripMenuItem.Name = "galaxyWarsToolStripMenuItem";
-            this.galaxyWarsToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
-            this.galaxyWarsToolStripMenuItem.Text = "Galaxy Wars";
-            this.galaxyWarsToolStripMenuItem.Click += new System.EventHandler(this.galaxyWarsToolStripMenuItem_Click);
             // 
             // assemblerToolStripMenuItem
             // 
@@ -1839,13 +1803,9 @@ namespace SLeighT80
         private System.Windows.Forms.TextBox txt_Steps;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.ToolStripMenuItem lunarToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem balloonToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem invadersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem emulationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem galaxyWarsToolStripMenuItem;
         private System.Windows.Forms.TextBox txt_Port_1_In;
         private System.Windows.Forms.Label label62;
         private System.Windows.Forms.Label label64;
