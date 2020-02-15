@@ -153,17 +153,22 @@ namespace SLeighT80
             }
         }
 
+        /// <summary>
+        /// Attempts to extract a zip file 
+        /// </summary>
+        /// <param name="fileName"></param>
         void OpenZipFile(string fileName)
         {
             List<KeyValuePair<string, int>> data;
 
             if (Loader.SupportedGames.TryGetValue(Path.GetFileName(fileName), out data))
             {
-                using (var file = File.OpenRead(fileName))
-                using (var zip = new ZipArchive(file, ZipArchiveMode.Read))
+                try
                 {
-                    try
-                    {
+                    StopEmulation();
+                    using (var file = File.OpenRead(fileName))
+                    using (var zip = new ZipArchive(file, ZipArchiveMode.Read))
+                    {                  
                         m_machine.Reset(0);
                         foreach (var f in data)
                         {
@@ -182,10 +187,10 @@ namespace SLeighT80
                         }
                         StartEmulation();
                     }
-                    catch(Exception)
-                    {
-                        MessageBox.Show("Error loading game");
-                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Error loading game");
                 }
             }
             else
