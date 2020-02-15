@@ -25,7 +25,7 @@ namespace SLeighT80.Processors.i8080
             machine.AddInstruction(new Instruction("DCR B", 0x05, 1, 5, 0, DCR_B));
             machine.AddInstruction(new Instruction("MVI B", 0x06, 2, 7, 0, MVI_B));
             machine.AddInstruction(new Instruction("RLC", 0x07, 1, 4, 0, RLC));
-            machine.AddInstruction(new Instruction("*NOP", 0x08, 1, 4, 0, NOP8085));
+            machine.AddInstruction(new Instruction("*NOP", 0x08, 1, 4, 0, NOP));
             machine.AddInstruction(new Instruction("DAD B", 0x09, 1, 10, 0, DAD_B));
             machine.AddInstruction(new Instruction("LDAX B", 0x0a, 1, 7, 0, LDAX_B));
             machine.AddInstruction(new Instruction("DCX B", 0x0b, 1, 5, 0, DCX_B));
@@ -33,7 +33,7 @@ namespace SLeighT80.Processors.i8080
             machine.AddInstruction(new Instruction("DCR C", 0x0d, 1, 5, 0, DCR_C));
             machine.AddInstruction(new Instruction("MVI C", 0x0e, 2, 7, 0, MVI_C));
             machine.AddInstruction(new Instruction("RRC", 0x0f, 1, 4, 0, RRC));
-            machine.AddInstruction(new Instruction("*NOP", 0x10, 1, 4, 0, NOP8085));
+            machine.AddInstruction(new Instruction("*NOP", 0x10, 1, 4, 0, NOP));
             machine.AddInstruction(new Instruction("LXI D", 0x11, 3, 10, 0, LXI_D));
             machine.AddInstruction(new Instruction("STAX D", 0x12, 1, 7, 0, STAX_D));
             machine.AddInstruction(new Instruction("INX D", 0x13, 1, 5, 0, INX_D));
@@ -41,7 +41,7 @@ namespace SLeighT80.Processors.i8080
             machine.AddInstruction(new Instruction("DCR D", 0x15, 1, 5, 0, DCR_D));
             machine.AddInstruction(new Instruction("MVI D", 0x16, 2, 7, 0, MVI_D));
             machine.AddInstruction(new Instruction("RAL", 0x17, 1, 4, 0, RAL));
-            machine.AddInstruction(new Instruction("*NOP", 0x18, 1, 4, 0, NOP8085));
+            machine.AddInstruction(new Instruction("*NOP", 0x18, 1, 4, 0, NOP));
             machine.AddInstruction(new Instruction("DAD D", 0x19, 1, 10, 0, DAD_D));
             machine.AddInstruction(new Instruction("LDAX D", 0x1a, 1, 7, 0, LDAX_D));
             machine.AddInstruction(new Instruction("DCX D", 0x1b, 1, 5, 0, DCX_D));
@@ -49,7 +49,7 @@ namespace SLeighT80.Processors.i8080
             machine.AddInstruction(new Instruction("DCR E", 0x1d, 1, 5, 0, DCR_E));
             machine.AddInstruction(new Instruction("MVI E", 0x1e, 2, 7, 0, MVI_E));
             machine.AddInstruction(new Instruction("RAR", 0x1f, 1, 4, 0, RAR));
-            machine.AddInstruction(new Instruction("*NOP", 0x20, 1, 4, 0, NOP8085));
+            machine.AddInstruction(new Instruction("*NOP", 0x20, 1, 4, 0, NOP));
             machine.AddInstruction(new Instruction("LXI H", 0x21, 3, 10, 0, LXI_H));
             machine.AddInstruction(new Instruction("SHLD", 0x22, 3, 16, 0, SHLD));
             machine.AddInstruction(new Instruction("INX H", 0x23, 1, 5, 0, INX_H));
@@ -57,7 +57,7 @@ namespace SLeighT80.Processors.i8080
             machine.AddInstruction(new Instruction("DCR H", 0x25, 1, 5, 0, DCR_H));
             machine.AddInstruction(new Instruction("MVI H", 0x26, 2, 7, 0, MVI_H));
             machine.AddInstruction(new Instruction("DAA", 0x27, 1, 4, 0, DAA));
-            machine.AddInstruction(new Instruction("*NOP", 0x28, 1, 4, 0, NOP8085));
+            machine.AddInstruction(new Instruction("*NOP", 0x28, 1, 4, 0, NOP));
             machine.AddInstruction(new Instruction("DAD H", 0x29, 1, 10, 0, DAD_H));
             machine.AddInstruction(new Instruction("LHLD", 0x2a, 3, 16, 0, LHLD));
             machine.AddInstruction(new Instruction("DCX H", 0x2b, 1, 5, 0, DCX_H));
@@ -65,7 +65,7 @@ namespace SLeighT80.Processors.i8080
             machine.AddInstruction(new Instruction("DCR L", 0x2d, 1, 5, 0, DCR_L));
             machine.AddInstruction(new Instruction("MVI L", 0x2e, 2, 7, 0, MVI_L));
             machine.AddInstruction(new Instruction("CMA", 0x2f, 1, 4, 0, CMA));
-            machine.AddInstruction(new Instruction("*NOP", 0x30, 1, 4, 0, NOP8085));
+            machine.AddInstruction(new Instruction("*NOP", 0x30, 1, 4, 0, NOP));
             machine.AddInstruction(new Instruction("LXI SP", 0x31, 3, 10, 0, LXI_SP));
             machine.AddInstruction(new Instruction("STA", 0x32, 3, 13, 0, STA));
             machine.AddInstruction(new Instruction("INX SP", 0x33, 1, 5, 0, INX_SP));
@@ -73,7 +73,7 @@ namespace SLeighT80.Processors.i8080
             machine.AddInstruction(new Instruction("DCR M", 0x35, 1, 10, 0, DCR_M));
             machine.AddInstruction(new Instruction("MVI M", 0x36, 2, 10, 0, MVI_M));
             machine.AddInstruction(new Instruction("STC", 0x37, 1, 4, 0, STC));
-            machine.AddInstruction(new Instruction("*NOP", 0x38, 1, 4, 0, NOP8085));
+            machine.AddInstruction(new Instruction("*NOP", 0x38, 1, 4, 0, NOP));
             machine.AddInstruction(new Instruction("DAD SP", 0x39, 1, 10, 0, DAD_SP));
             machine.AddInstruction(new Instruction("LDA", 0x3a, 3, 13, 0, LDA));
             machine.AddInstruction(new Instruction("DCX SP", 0x3b, 1, 5, 0, DCX_SP));
@@ -300,10 +300,6 @@ namespace SLeighT80.Processors.i8080
 
         // 0x00
         private static void NOP(i8080 machine, byte b2, byte b3)
-        {
-        }
-
-        static void NOP8085(i8080 machine, byte b2, byte b3)
         {
         }
 
@@ -1891,24 +1887,17 @@ namespace SLeighT80.Processors.i8080
                 switch (b2)
                 {
                     case 0:
-                        a = 0;
+                        a = 1;
                         break;
                     case 1:
                         a = machine.PORT_IN_1;
                         break;
                     case 2:
-                        a = (byte)((machine.PORT_IN_1 & 0x07));
+                        a = (byte)((machine.PORT_IN_2 & 0x8f) | (machine.PORT_IN_1 & 0x70));
                         break;
                     case 3:
                         ushort v = (ushort)((machine.SHIFT_MSB << 8) | machine.SHIFT_LSB);
                         a = (byte)((v >> (8 - machine.SHIFT_OFFSET)) & 0xff);
-                        break;
-                    case 4:
-                        a = (byte)((machine.PORT_IN_2 & 0x8f) );
-                        break;
-                    case 5:
-                        ushort v2 = (ushort)((machine.SHIFT_MSB << 8) | machine.SHIFT_LSB);
-                        a = (byte)((v2 >> (8 - machine.SHIFT_OFFSET)) & 0xff);
                         break;
                 }
                 machine.A = a;
