@@ -63,6 +63,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="fAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fAbout.Designer.cs">
+      <DependentUpon>fAbout.cs</DependentUpon>
+    </Compile>
     <Compile Include="Machines\Invaders\Input.cs" />
     <Compile Include="Machines\Invaders\Loader.cs" />
     <Compile Include="NativeMethods.cs" />
@@ -70,11 +76,11 @@
     <Compile Include="Processors\i8080\i8080InstructionSet.cs" />
     <Compile Include="Processors\Assembler.cs" />
     <Compile Include="Processors\Disassembler.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="fMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="fMain.Designer.cs">
+      <DependentUpon>fMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Processors\Instruction.cs" />
     <Compile Include="Processors\i8080\i8080.cs" />
@@ -84,8 +90,11 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Processors\Utilities.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="fAbout.resx">
+      <DependentUpon>fAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fMain.resx">
+      <DependentUpon>fMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -113,6 +122,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="SLeighT80.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

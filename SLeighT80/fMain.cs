@@ -16,7 +16,7 @@ using System.Linq;
 
 namespace SLeighT80
 {
-    public partial class Form1 : Form
+    public partial class fMain : Form
     {
         // Our space invaders machine
         readonly i8080 m_machine = new i8080();
@@ -33,7 +33,7 @@ namespace SLeighT80
         /// <summary>
         /// 
         /// </summary>
-        public Form1()
+        public fMain()
         {
             InitializeComponent();
 
@@ -644,6 +644,14 @@ namespace SLeighT80
             }
             m_fullscreen = !m_fullscreen;
 
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (fAbout aboutBox = new fAbout())
+            {
+                aboutBox.ShowDialog(this);
+            }
         }
     }
 }
