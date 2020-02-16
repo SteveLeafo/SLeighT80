@@ -164,7 +164,7 @@ namespace SLeighT80.Machines.Invaders
         /// <summary>
         /// Stops the currently looping sounds file
         /// </summary>
-        private static void StopLoopingSoundFile()
+        public static void StopLoopingSoundFile()
         {
             m_loopingSound?.Stop();
         }

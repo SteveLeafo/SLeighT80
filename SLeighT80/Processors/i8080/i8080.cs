@@ -168,6 +168,8 @@ namespace SLeighT80.Processors.i8080
             Console.Clear();
 
             nextLine = string.Empty;
+
+            Machines.Invaders.Sound.StopLoopingSoundFile();
         }
 
 
