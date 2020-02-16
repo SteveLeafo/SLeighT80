@@ -170,7 +170,7 @@ namespace SLeighT80
                     StopEmulation();
                     using (var file = File.OpenRead(fileName))
                     using (var zip = new ZipArchive(file, ZipArchiveMode.Read))
-                    {                  
+                    {
                         m_machine.Reset(0);
                         foreach (var f in data)
                         {
@@ -452,6 +452,20 @@ namespace SLeighT80
                 m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x40));
                 e.Handled = true;
             }
+            else if (e.KeyData == Keys.Up)
+            {
+                m_machine.PORT_IN_1 |= 0x80;
+                // Can't move left and right at the same time 
+                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x08));
+                e.Handled = true;
+            }
+            else if (e.KeyData == Keys.Down)
+            {
+                m_machine.PORT_IN_1 |= 0x08;
+                // Can't move left and right at the same time 
+                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x80));
+                e.Handled = true;
+            }
             else if (e.KeyData == Keys.Right)
             {
                 m_machine.PORT_IN_1 |= 0x40;
@@ -482,6 +496,11 @@ namespace SLeighT80
                 m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x04));
                 e.Handled = true;
             }
+            else if (e.KeyData == Keys.D2)
+            {
+                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x02));
+                e.Handled = true;
+            }
             else if (e.KeyData == Keys.Left)
             {
                 m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x20));
@@ -490,6 +509,16 @@ namespace SLeighT80
             else if (e.KeyData == Keys.Right)
             {
                 m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x40));
+                e.Handled = true;
+            }
+            else if (e.KeyData == Keys.Up)
+            {
+                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x80));
+                e.Handled = true;
+            }
+            else if (e.KeyData == Keys.Down)
+            {
+                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x08));
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.Space)
