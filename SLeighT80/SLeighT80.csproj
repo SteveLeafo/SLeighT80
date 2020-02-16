@@ -69,6 +69,7 @@
     <Compile Include="fAbout.Designer.cs">
       <DependentUpon>fAbout.cs</DependentUpon>
     </Compile>
+    <Compile Include="Machines\Invaders\ColourMap.cs" />
     <Compile Include="Machines\Invaders\Input.cs" />
     <Compile Include="Machines\Invaders\Loader.cs" />
     <Compile Include="NativeMethods.cs" />

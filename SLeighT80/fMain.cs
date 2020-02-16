@@ -82,6 +82,7 @@ namespace SLeighT80
         protected override void OnLoad(EventArgs e)
         {
             Loader.UpdateSupportedGames();
+            Machines.Invaders.ColourMap.UpdateSupportedColorMaps();
 
             string[] args = Environment.GetCommandLineArgs();
             bool fullScreen = false;
@@ -163,6 +164,7 @@ namespace SLeighT80
 
             if (Loader.SupportedGames.TryGetValue(Path.GetFileName(fileName), out data))
             {
+                Machines.Invaders.ColourMap.SetColorMap(fileName);
                 try
                 {
                     StopEmulation();
@@ -180,7 +182,7 @@ namespace SLeighT80
                                     using (var memoryStream = new MemoryStream())
                                     {
                                         stream.CopyTo(memoryStream);
-                                        memoryStream.ToArray().CopyTo(m_machine.RAM, f.Value); ;
+                                        memoryStream.ToArray().CopyTo(m_machine.RAM, f.Value);
                                     }
                                 }
                             }

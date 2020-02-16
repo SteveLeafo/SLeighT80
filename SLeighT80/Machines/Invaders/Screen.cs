@@ -161,6 +161,10 @@ namespace SLeighT80.Machines.Invaders
             if (((value >> bit) & 1) != 0)
             {
                 // Call return Color.White here for the black and white version;
+                if (ColourMap.ActiveColorMap != null)
+                {
+                    return ColourMap.GetColor(1023 - ((27 - (x / 8)) * 32 + ((y / 8))));
+                }
 
                 if (y >= 184 && y <= 239 && x >= 0 && x <= 223)
                 {
