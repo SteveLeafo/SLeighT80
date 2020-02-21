@@ -11,6 +11,9 @@ namespace SLeighT80.Processors
         // Interrupts will only be processed when true, set / cleared by EI and DI
         internal bool InterruptsEnabled = false;
 
+        // 2 instructions will complete after an interupt triggered.
+        internal int InterruptDelay = 0;
+
         // The number of instructions that have been executed
         internal UInt64 NumberOfExecutedInstructions;
 

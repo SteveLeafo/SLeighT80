@@ -74,7 +74,7 @@ namespace SLeighT80.Processors.i8080
         /// </summary>
         public void RunNext()
         {
-            if (InterruptPending && InterruptsEnabled)
+            if (InterruptPending && InterruptsEnabled && InterruptDelay == 0)
             {
                 InterruptPending = false;
                 InterruptsEnabled = false;
@@ -122,6 +122,7 @@ namespace SLeighT80.Processors.i8080
 
             InterruptPending = true;
             InterruptOperation = opcode;
+            InterruptDelay = 2;
 
             return true;
         }
@@ -181,6 +182,11 @@ namespace SLeighT80.Processors.i8080
             byte code = RAM[PC++];
             Codes[code] = true;
             Instruction instruction = OpCodes[code];
+
+            if (InterruptDelay > 0)
+            {
+                InterruptDelay--;
+            }
 
             if (PC < RAM.Length - 2)
             {
