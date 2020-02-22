@@ -13,7 +13,13 @@ namespace SLeighT80.Machines.Invaders
 
         // Set true if we are using the control stick to move right
         private static bool m_stickRight;
-        
+
+        // Set true if we are using the control stick to move left
+        private static bool m_stickUp;
+
+        // Set true if we are using the control stick to move right
+        private static bool m_stickDown;
+
         // This will send values to the Input port in response to controller actions
         public static void Check(i8080 machine)
         {
@@ -25,6 +31,8 @@ namespace SLeighT80.Machines.Invaders
                 CheckXInputButtons(machine, state, GamepadButtonFlags.A, 0x10);
                 CheckXInputButtons(machine, state, GamepadButtonFlags.DPadLeft, 0x20);
                 CheckXInputButtons(machine, state, GamepadButtonFlags.DPadRight, 0x40);
+                CheckXInputButtons(machine, state, GamepadButtonFlags.DPadUp, 0x80);
+                CheckXInputButtons(machine, state, GamepadButtonFlags.DPadDown, 0x08);
 
                 CheckXInputSticks(machine, state);
             }
@@ -71,6 +79,16 @@ namespace SLeighT80.Machines.Invaders
                 machine.PORT_IN_1 |= 0x20;
                 m_stickLeft = true;
             }
+            else if (state.Gamepad.LeftThumbY < -Gamepad.LeftThumbDeadZone)
+            {
+                machine.PORT_IN_1 |= 0x08;
+                m_stickDown = true;
+            }
+            else if (state.Gamepad.LeftThumbY > Gamepad.LeftThumbDeadZone)
+            {
+                machine.PORT_IN_1 |= 0x80;
+                m_stickUp = true;
+            }
             else
             {
                 if (m_stickRight)
@@ -82,6 +100,16 @@ namespace SLeighT80.Machines.Invaders
                 {
                     machine.PORT_IN_1 = unchecked((byte)(machine.PORT_IN_1 & (byte)~0x20));
                     m_stickLeft = false;
+                }
+                else if (m_stickUp)
+                {
+                    machine.PORT_IN_1 = unchecked((byte)(machine.PORT_IN_1 & (byte)~0x80));
+                    m_stickUp = false;
+                }
+                else if (m_stickDown)
+                {
+                    machine.PORT_IN_1 = unchecked((byte)(machine.PORT_IN_1 & (byte)~0x08));
+                    m_stickDown = false;
                 }
             }
         }
