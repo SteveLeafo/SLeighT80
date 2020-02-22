@@ -550,6 +550,8 @@ namespace SLeighT80
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
+            Stopwatch sw2 = new Stopwatch();
+            sw2.Start();
 
             int ticks = (int)(1000.0 / 60.0 / 2.0) * 10000;
 
@@ -557,21 +559,33 @@ namespace SLeighT80
 
             int c = 0;
             long t = 0;
+            double s1;
+            double s2;
+            double clockRate = 0;
             while (machine.On)
             {
-                machine.RunNext();
+                if (c % 100 == 0)
+                {
+                    s1 = (double)(machine.Cycles + 1);
+                    s2 = (double)(sw.ElapsedMilliseconds + 1);
+                    clockRate = s1 / s2;
+                }
 
+                if (clockRate < 2000)
+                {
+                    machine.RunNext();
+                }
                 if (t > ticks)
                 {
                     if (machine.Interupt((byte)(top ? 0xcf : 0xd7)))
                     {
                         top = !top;
                     }
-                    sw.Restart();
+                    sw2.Restart();
                 }
                 if (c % 100 == 0)
                 {
-                    t = sw.ElapsedTicks;
+                    t = sw2.ElapsedTicks;
 
                 }
 

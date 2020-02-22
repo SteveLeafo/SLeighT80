@@ -84,7 +84,7 @@ namespace SLeighT80.Processors.i8080
                 {
                     instruction.Execute(this, RAM[PC + 1], RAM[PC + 2]);
                     Codes[instruction.OpCode] = true;
-                    Cycles = Cycles = (UInt64)instruction.Cycles;
+                    Cycles += (UInt64)instruction.Cycles;
                 }
             }
             else
@@ -202,7 +202,7 @@ namespace SLeighT80.Processors.i8080
 
                 instruction.Execute(this, b1, b2);
 
-                Cycles = Cycles = (UInt64)instruction.Cycles;
+                Cycles  += (UInt64)instruction.Cycles;
             }
             NumberOfExecutedInstructions++;
         }
