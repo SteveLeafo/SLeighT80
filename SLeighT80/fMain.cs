@@ -123,6 +123,31 @@ namespace SLeighT80
         /// <param name="e"></param>
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Open(true);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Open();
+            tabControl1.SelectedIndex = 4;
+            txt_Console.Text += "\r\n";
+
+            textBox1.Text = Disassembler.Disassemble(m_machine.RAM, m_machine.InstructionSet);
+
+            RefreshDebugInformation();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="start"></param>
+        void Open(bool start = false)
+        {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
                 if (ofd.ShowDialog() == DialogResult.OK)
@@ -130,6 +155,10 @@ namespace SLeighT80
                     if (Path.GetExtension(ofd.FileName).ToUpper().Contains("ZIP"))
                     {
                         OpenZipFile(ofd.FileName);
+                        if (start)
+                        {
+                            StartEmulation();
+                        }
                     }
                     else
                     {
@@ -187,7 +216,6 @@ namespace SLeighT80
                                 }
                             }
                         }
-                        StartEmulation();
                     }
                 }
                 catch (Exception)
@@ -562,6 +590,9 @@ namespace SLeighT80
             double s1;
             double s2;
             double clockRate = 0;
+
+            machine.MemoryProtection = true;
+
             while (machine.On)
             {
                 if (c % 100 == 0)

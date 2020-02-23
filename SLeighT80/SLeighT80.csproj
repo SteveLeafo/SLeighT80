@@ -127,5 +127,9 @@
   <ItemGroup>
     <None Include="Properties\Logo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Processors\LR35902\" />
+    <Folder Include="Processors\z80\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
