@@ -193,19 +193,21 @@ Function InstallSLeighT80Files
 	SetOutPath "$INSTDIR"
 	File "..\SLeighT80\bin\Release\SLeighT80.exe"
 	File "..\SLeighT80\SLeighT80.ico"
+	File "..\SLeighT80\bin\Release\SharpDX.Direct3D9.dll"
+	File "..\SLeighT80\bin\Release\SharpDX.DXGI.dll"
+	File "..\SLeighT80\bin\Release\SharpDX.Mathematics.dll"
+	File "..\SLeighT80\bin\Release\SharpDX.MediaFoundation.dll"
+	File "..\SLeighT80\bin\Release\SharpDX.XAudio2.dll"
 	File "..\SLeighT80\bin\Release\SharpDX.dll"
 	File "..\SLeighT80\bin\Release\SharpDX.XInput.dll"
 	File "0.wav"
-	File "1.wav"
-	File "2.wav"
-	File "3.wav"
-	File "4.wav"
-	File "5.wav"
-	File "6.wav"
-	File "7.wav"
-	File "8.wav"
-	File "9.wav"
-
+	
+    CreateDirectory "$INSTDIR\Samples"
+	SetOutPath "$INSTDIR\Samples"
+	File "Samples\invaders.zip"
+	File "Samples\lrescue.zip"
+	File "Samples\lupin3.zip"
+	
 FunctionEnd
 
 ;*********************************************************************
