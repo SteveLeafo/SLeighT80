@@ -8,6 +8,9 @@ namespace SLeighT80.Processors
         // Is this thing on?
         internal bool On = false;
 
+        // Is this thing on?
+        internal bool MemoryProtection = false;
+
         // Interrupts will only be processed when true, set / cleared by EI and DI
         internal bool InterruptsEnabled = false;
 

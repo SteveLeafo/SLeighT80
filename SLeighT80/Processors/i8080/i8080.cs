@@ -208,6 +208,22 @@ namespace SLeighT80.Processors.i8080
         }
 
         /// <summary>
+        /// Writes a byte of data to memory - adds checks to not overwrite ROM
+        /// </summary>
+        /// <param name="machine"></param>
+        /// <param name="address"></param>
+        /// <param name="value"></param>
+        internal void WriteMem(ushort address, byte value)
+        {
+            if (MemoryProtection && (address < 0x2000 || address > 0xFFFF))
+            {
+                return;
+            }
+
+            RAM[address] = value;
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>

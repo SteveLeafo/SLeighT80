@@ -314,13 +314,14 @@ namespace SLeighT80.Processors.i8080
         private static void STAX_B(i8080 machine, byte b2, byte b3)
         {
             ushort address = (ushort)((machine.B << 8) + machine.C);
-            machine.RAM[address] = machine.A;
+            machine.WriteMem(address, machine.A);
         }
 
         // 0x03
         private static void INX_B(i8080 machine, byte b2, byte b3)
         {
-            ushort value = (ushort)((machine.B << 8) + machine.C + 1);
+            ushort value = (ushort)((machine.B << 8) + machine.C);
+            value++;
             machine.C = (byte)(value & 0xff);
             machine.B = (byte)(value >> 8);
         }
@@ -387,7 +388,8 @@ namespace SLeighT80.Processors.i8080
         // 0x0b
         private static void DCX_B(i8080 machine, byte b2, byte b3)
         {
-            ushort value = (ushort)((machine.B << 8) + machine.C - 1);
+            ushort value = (ushort)((machine.B << 8) + machine.C);
+            value--;
             machine.C = (byte)(value & 0xff);
             machine.B = (byte)(value >> 8);
         }
@@ -441,13 +443,14 @@ namespace SLeighT80.Processors.i8080
         private static void STAX_D(i8080 machine, byte b2, byte b3)
         {
             ushort address = (ushort)((machine.D << 8) + machine.E);
-            machine.RAM[address] = machine.A;
+            machine.WriteMem(address, machine.A);
         }
 
         // 0x13
         private static void INX_D(i8080 machine, byte b2, byte b3)
         {
-            ushort value = (ushort)((machine.D << 8) + machine.E + 1);
+            ushort value = (ushort)((machine.D << 8) + machine.E);
+            value++;
             machine.E = (byte)(value & 0xff);
             machine.D = (byte)(value >> 8);
         }
@@ -473,7 +476,7 @@ namespace SLeighT80.Processors.i8080
         }
 
         // 0x17
-        private static void RAL(i8080 machine, byte b2, byte b3)
+        internal static void RAL(i8080 machine, byte b2, byte b3)
         {
             byte x = machine.A;
             machine.A = (byte)((machine.F & (byte)i8080.Flags.C) | (x << 1));
@@ -507,7 +510,8 @@ namespace SLeighT80.Processors.i8080
         // 0x1b
         private static void DCX_D(i8080 machine, byte b2, byte b3)
         {
-            ushort value = (ushort)((machine.D << 8) + machine.E - 1);
+            ushort value = (ushort)((machine.D << 8) + machine.E);
+            value--;
             machine.E = (byte)(value & 0xff);
             machine.D = (byte)(value >> 8);
         }
@@ -533,7 +537,7 @@ namespace SLeighT80.Processors.i8080
         }
 
         // 0x1f
-        private static void RAR(i8080 machine, byte b2, byte b3)
+        internal static void RAR(i8080 machine, byte b2, byte b3)
         {
             bool cy = (machine.F & (byte)i8080.Flags.C) != 0;
             if ((machine.A & 1) != 0)
@@ -568,15 +572,16 @@ namespace SLeighT80.Processors.i8080
         private static void SHLD(i8080 machine, byte b2, byte b3)
         {
             ushort address = (ushort)((b3 << 8) + b2);
-            machine.RAM[address] = machine.L;
+            machine.WriteMem(address, machine.L);
             address = (ushort)(address + 1);
-            machine.RAM[address] = machine.H;
+            machine.WriteMem(address, machine.H);
         }
 
         // 0x23
         private static void INX_H(i8080 machine, byte b2, byte b3)
         {
-            ushort value = (ushort)((machine.H << 8) + machine.L + 1);
+            ushort value = (ushort)((machine.H << 8) + machine.L);
+            value++;
             machine.L = (byte)(value & 0x00ff);
             machine.H = (byte)(value >> 8);
         }
@@ -660,7 +665,8 @@ namespace SLeighT80.Processors.i8080
         // 0x2b
         private static void DCX_H(i8080 machine, byte b2, byte b3)
         {
-            ushort value = (ushort)((machine.H << 8) + machine.L - 1);
+            ushort value = (ushort)((machine.H << 8) + machine.L);
+            value--;
             machine.L = (byte)(value & 0xff);
             machine.H = (byte)(value >> 8);
         }
@@ -703,7 +709,7 @@ namespace SLeighT80.Processors.i8080
         private static void STA(i8080 machine, byte b2, byte b3)
         {
             ushort address = (ushort)((b3 << 8) + b2);
-            machine.RAM[address] = machine.A;
+            machine.WriteMem(address, machine.A);
         }
 
         // 0x33
@@ -716,7 +722,7 @@ namespace SLeighT80.Processors.i8080
         private static void INR_M(i8080 machine, byte b2, byte b3)
         {
             ushort address = (ushort)((machine.H << 8) + machine.L);
-            machine.RAM[address] += 1;
+            machine.WriteMem(address, (byte)(machine.RAM[address] + 1));
             machine.FlagsZSP(machine.RAM[address], i8080.AccessoryFlagRule.Inc);
         }
 
@@ -724,7 +730,7 @@ namespace SLeighT80.Processors.i8080
         private static void DCR_M(i8080 machine, byte b2, byte b3)
         {
             ushort address = (ushort)((machine.H << 8) + machine.L);
-            machine.RAM[address] -= 1;
+            machine.WriteMem(address, (byte)(machine.RAM[address] - 1));
             machine.FlagsZSP(machine.RAM[address], i8080.AccessoryFlagRule.Dec);
         }
 
@@ -732,7 +738,7 @@ namespace SLeighT80.Processors.i8080
         private static void MVI_M(i8080 machine, byte b2, byte b3)
         {
             ushort address = (ushort)((machine.H << 8) + machine.L);
-            machine.RAM[address] = b2;
+            machine.WriteMem(address, b2);
         }
 
         // 0x37
@@ -1101,42 +1107,42 @@ namespace SLeighT80.Processors.i8080
         private static void MOV_M_B(i8080 machine, byte b2, byte b3)
         {
             ushort address = (ushort)((machine.H << 8) + machine.L);
-            machine.RAM[address] = machine.B;
+            machine.WriteMem(address, machine.B);
         }
 
         // 0x71
         private static void MOV_M_C(i8080 machine, byte b2, byte b3)
         {
             ushort address = (ushort)((machine.H << 8) + machine.L);
-            machine.RAM[address] = machine.C;
+            machine.WriteMem(address, machine.C);
         }
 
         // 0x72
         private static void MOV_M_D(i8080 machine, byte b2, byte b3)
         {
             ushort address = (ushort)((machine.H << 8) + machine.L);
-            machine.RAM[address] = machine.D;
+            machine.WriteMem(address, machine.D);
         }
 
         // 0x73
         private static void MOV_M_E(i8080 machine, byte b2, byte b3)
         {
             ushort address = (ushort)((machine.H << 8) + machine.L);
-            machine.RAM[address] = machine.E;
+            machine.WriteMem(address, machine.E);
         }
 
         // 0x74
         private static void MOV_M_H(i8080 machine, byte b2, byte b3)
         {
             ushort address = (ushort)((machine.H << 8) + machine.L);
-            machine.RAM[address] = machine.H;
+            machine.WriteMem(address, machine.H);
         }
 
         // 0x75
         private static void MOV_M_L(i8080 machine, byte b2, byte b3)
         {
             ushort address = (ushort)((machine.H << 8) + machine.L);
-            machine.RAM[address] = machine.L;
+            machine.WriteMem(address, machine.L);
         }
 
         // 0x76
@@ -1149,7 +1155,7 @@ namespace SLeighT80.Processors.i8080
         private static void MOV_M_A(i8080 machine, byte b2, byte b3)
         {
             ushort address = (ushort)((machine.H << 8) + machine.L);
-            machine.RAM[address] = machine.A;
+            machine.WriteMem(address, machine.A);
         }
 
         // 0x78
@@ -1449,7 +1455,7 @@ namespace SLeighT80.Processors.i8080
         // 0xa8
         private static void XRA_B(i8080 machine, byte b2, byte b3)
         {
-            machine.A = (byte)(machine.A ^ machine.B); 
+            machine.A = (byte)(machine.A ^ machine.B);
             machine.LogicFlags();
         }
 
@@ -1616,8 +1622,8 @@ namespace SLeighT80.Processors.i8080
             if ((machine.F & (byte)i8080.Flags.Z) == 0)
             {
                 machine.PC = machine.Pop();
+                }
             }
-        }
 
         // 0xc1
         private static void POP_B(i8080 machine, byte b2, byte b3)
@@ -1634,10 +1640,10 @@ namespace SLeighT80.Processors.i8080
             {
                 ushort address = (ushort)((b3 << 8) + b2);
                 machine.PC = address;
+                }
             }
-        }
 
-        // 0xcb
+        // 0xc3
         private static void JMP(i8080 machine, byte b2, byte b3)
         {
             ushort address = (ushort)((b3 << 8) + b2);
@@ -1653,8 +1659,8 @@ namespace SLeighT80.Processors.i8080
                 ushort ret = machine.PC;
                 machine.Push((byte)(ret >> 8), (byte)(ret & 0xff));
                 machine.PC = address;
+                }
             }
-        }
 
         // 0xc5
         private static void PUSH_B(i8080 machine, byte b2, byte b3)
@@ -1680,14 +1686,14 @@ namespace SLeighT80.Processors.i8080
             if ((machine.F & (byte)i8080.Flags.Z) != 0)
             {
                 machine.PC = machine.Pop();
+                }
             }
-        }
 
         // 0xc9
         private static void RET(i8080 machine, byte b2, byte b3)
         {
             machine.PC = machine.Pop();
-        }
+            }
 
         // 0xca
         private static void JZ(i8080 machine, byte b2, byte b3)
@@ -1696,8 +1702,8 @@ namespace SLeighT80.Processors.i8080
             {
                 ushort address = (ushort)((b3 << 8) + b2);
                 machine.PC = address;
+                }
             }
-        }
 
         // 0xcb -> JML
 
@@ -1710,8 +1716,8 @@ namespace SLeighT80.Processors.i8080
                 ushort ret = machine.PC;
                 machine.Push((byte)(ret >> 8), (byte)(ret & 0xff));
                 machine.PC = address;
+                }
             }
-        }
 
         // 0xcd
         private static void CALL(i8080 machine, byte b2, byte b3)
@@ -1720,7 +1726,7 @@ namespace SLeighT80.Processors.i8080
             ushort ret = machine.PC;
             machine.Push((byte)(ret >> 8), (byte)(ret & 0xff));
             machine.PC = address;
-        }
+                }
 
         // 0xce
         private static void ACI(i8080 machine, byte b2, byte b3)
@@ -1732,7 +1738,7 @@ namespace SLeighT80.Processors.i8080
         private static void RST_1(i8080 machine, byte b2, byte b3)
         {
             RST(machine, RST_TARGETS.RST_1);
-        }       
+        }
 
         // 0xd0
         private static void RNC(i8080 machine, byte b2, byte b3)
@@ -1740,8 +1746,8 @@ namespace SLeighT80.Processors.i8080
             if ((machine.F & (byte)i8080.Flags.C) == 0)
             {
                 machine.PC = machine.Pop();
+                }
             }
-        }
 
         // 0xd1
         private static void POP_D(i8080 machine, byte b2, byte b3)
@@ -1758,8 +1764,8 @@ namespace SLeighT80.Processors.i8080
             {
                 ushort address = (ushort)((b3 << 8) + b2);
                 machine.PC = address;
+                }
             }
-        }
 
         // 0xd3
         private static void OUT(i8080 machine, byte b2, byte b3)
@@ -1788,8 +1794,6 @@ namespace SLeighT80.Processors.i8080
                         Sound.PlaySounds(machine);
                         break;
                     default:
-                        machine.SHIFT_LSB = machine.SHIFT_MSB;
-                        machine.SHIFT_MSB = machine.A;
                         break;
                 }
             }
@@ -1804,8 +1808,8 @@ namespace SLeighT80.Processors.i8080
                 ushort ret = machine.PC;
                 machine.Push((byte)(ret >> 8), (byte)(ret & 0xff));
                 machine.PC = address;
+                }
             }
-        }
 
         // 0xd5
         private static void PUSH_D(i8080 machine, byte b2, byte b3)
@@ -1831,8 +1835,8 @@ namespace SLeighT80.Processors.i8080
             if ((machine.F & (byte)i8080.Flags.C) != 0)
             {
                 machine.PC = machine.Pop();
+                }
             }
-        }
 
         // 0xd9 -> RET
 
@@ -1843,8 +1847,8 @@ namespace SLeighT80.Processors.i8080
             {
                 ushort address = (ushort)((b3 << 8) + b2);
                 machine.PC = address;
+                }
             }
-        }
 
         // 0xdb
         private static void IN(i8080 machine, byte b2, byte b3)
@@ -1913,8 +1917,8 @@ namespace SLeighT80.Processors.i8080
                 ushort ret = machine.PC;
                 machine.Push((byte)(ret >> 8), (byte)(ret & 0xff));
                 machine.PC = address;
+                }
             }
-        }
 
         // 0xdd -> CALL
 
@@ -1936,8 +1940,8 @@ namespace SLeighT80.Processors.i8080
             if ((machine.F & (byte)i8080.Flags.P) == 0)
             {
                 machine.PC = machine.Pop();
+                }
             }
-        }
 
         // 0xe1
         private static void POP_H(i8080 machine, byte b2, byte b3)
@@ -1954,8 +1958,8 @@ namespace SLeighT80.Processors.i8080
             {
                 ushort address = (ushort)((b3 << 8) + b2);
                 machine.PC = address;
+                }
             }
-        }
 
         // 0xe3
         private static void XTHL(i8080 machine, byte b2, byte b3)
@@ -1964,8 +1968,8 @@ namespace SLeighT80.Processors.i8080
             byte l = machine.L;
             machine.L = machine.RAM[machine.SP];
             machine.H = machine.RAM[machine.SP + 1];
-            machine.RAM[machine.SP] = l;
-            machine.RAM[machine.SP + 1] = h;
+            machine.WriteMem(machine.SP, l);
+            machine.WriteMem((ushort)(machine.SP + 1), h);
         }
 
         // 0xe4
@@ -2004,14 +2008,14 @@ namespace SLeighT80.Processors.i8080
             if ((machine.F & (byte)i8080.Flags.P) != 0)
             {
                 machine.PC = machine.Pop();
+                }
             }
-        }
 
         // 0xe9
         private static void PCHL(i8080 machine, byte b2, byte b3)
         {
             machine.PC = (ushort)((machine.H << 8) + machine.L);
-        }
+            }
 
         // 0xea
         private static void JPE(i8080 machine, byte b2, byte b3)
@@ -2020,11 +2024,11 @@ namespace SLeighT80.Processors.i8080
             {
                 ushort address = (ushort)((b3 << 8) + b2);
                 machine.PC = address; 
+                }
             }
-        }
 
         // 0xeb
-        private static void XCHG(i8080 machine, byte b2, byte b3)
+        internal static void XCHG(i8080 machine, byte b2, byte b3)
         {
             byte h = machine.D;
             byte l = machine.E;
@@ -2043,8 +2047,8 @@ namespace SLeighT80.Processors.i8080
                 ushort ret = machine.PC;
                 machine.Push((byte)(ret >> 8), (byte)(ret & 0xff));
                 machine.PC = address;
+                }
             }
-        }
 
         // 0xed -> CALL
 
@@ -2067,8 +2071,8 @@ namespace SLeighT80.Processors.i8080
             if ((machine.F & (byte)i8080.Flags.S) == 0)
             {
                 machine.PC = machine.Pop();
+                }
             }
-        }
 
         // 0xf1
         private static void POP_PSW(i8080 machine, byte b2, byte b3)
@@ -2106,8 +2110,8 @@ namespace SLeighT80.Processors.i8080
                 ushort ret = machine.PC;
                 machine.Push((byte)(ret >> 8), (byte)(ret & 0xff));
                 machine.PC = address;
+                }
             }
-        }
 
         // 0xf5
         private static void PUSH_PSW(i8080 machine, byte b2, byte b3)
@@ -2136,8 +2140,8 @@ namespace SLeighT80.Processors.i8080
             if ((machine.F & (byte)i8080.Flags.S) != 0)
             {
                 machine.PC = machine.Pop();
+                }
             }
-        }
 
         // 0xf9
         private static void SPHL(i8080 machine, byte b2, byte b3)
@@ -2152,8 +2156,8 @@ namespace SLeighT80.Processors.i8080
             {
                 ushort address = (ushort)((b3 << 8) + b2);
                 machine.PC = address;
+                }
             }
-        }
 
         // 0xfb
         private static void EI(i8080 machine, byte b2, byte b3)
@@ -2171,8 +2175,8 @@ namespace SLeighT80.Processors.i8080
                 ushort ret = machine.PC;
                 machine.Push((byte)(ret >> 8), (byte)(ret & 0xff));
                 machine.PC = address;
+                }
             }
-        }
 
         // 0xfd -> CALL
 
