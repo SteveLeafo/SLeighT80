@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.Design;
 using System.IO;
 using System.Windows.Forms;
 using System.Threading;
@@ -25,7 +24,7 @@ namespace SLeighT80
         string m_filename = string.Empty;
 
         // A cool (but basic) control I found that displays binary data in hex format
-        private readonly ByteViewer m_byteViewer;
+        //private readonly ByteViewer m_byteViewer;
 
         // Set to true when in full screen mode
         bool m_fullscreen;
@@ -41,8 +40,8 @@ namespace SLeighT80
 
             KeyPreview = true;
 
-            m_byteViewer = new ByteViewer { Dock = DockStyle.Fill };
-            tabPage1.Controls.Add(m_byteViewer);
+            //m_byteViewer = new ByteViewer { Dock = DockStyle.Fill };
+            //tabPage1.Controls.Add(m_byteViewer);
 
             // Install the 8080 instruction set to this machine
             i8080InstructionSet.Install(m_machine);
@@ -261,7 +260,7 @@ namespace SLeighT80
             checkBox7.Checked = (m_machine.F & 2) != 0;
             checkBox8.Checked = (m_machine.F & (byte)i8080.Flags.C) != 0;
 
-            m_byteViewer.SetBytes(m_machine.RAM);
+            //m_byteViewer.SetBytes(m_machine.RAM);
 
             byte[] buf = new byte[100];
             Invalidate();
