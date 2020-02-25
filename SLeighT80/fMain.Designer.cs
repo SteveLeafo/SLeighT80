@@ -35,6 +35,7 @@ namespace SLeighT80
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.assemblerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openASMFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.assembleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -165,7 +166,6 @@ namespace SLeighT80
             this.button4 = new System.Windows.Forms.Button();
             this.txt_Steps = new System.Windows.Forms.TextBox();
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -191,7 +191,8 @@ namespace SLeighT80
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(656, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(674, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -207,9 +208,16 @@ namespace SLeighT80
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // loadToolStripMenuItem
+            // 
+            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.loadToolStripMenuItem.Text = "Load";
+            this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
             // assemblerToolStripMenuItem
             // 
@@ -419,7 +427,7 @@ namespace SLeighT80
             this.txt_Pointer_SP.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txt_Pointer_SP.Location = new System.Drawing.Point(80, 183);
             this.txt_Pointer_SP.Name = "txt_Pointer_SP";
-            this.txt_Pointer_SP.Size = new System.Drawing.Size(232, 20);
+            this.txt_Pointer_SP.Size = new System.Drawing.Size(232, 23);
             this.txt_Pointer_SP.TabIndex = 1;
             // 
             // txt_Pointer_IP
@@ -428,7 +436,7 @@ namespace SLeighT80
             this.txt_Pointer_IP.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txt_Pointer_IP.Location = new System.Drawing.Point(80, 157);
             this.txt_Pointer_IP.Name = "txt_Pointer_IP";
-            this.txt_Pointer_IP.Size = new System.Drawing.Size(232, 20);
+            this.txt_Pointer_IP.Size = new System.Drawing.Size(232, 23);
             this.txt_Pointer_IP.TabIndex = 1;
             // 
             // label17
@@ -580,7 +588,7 @@ namespace SLeighT80
             this.txt_Register_C.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txt_Register_C.Location = new System.Drawing.Point(177, 49);
             this.txt_Register_C.Name = "txt_Register_C";
-            this.txt_Register_C.Size = new System.Drawing.Size(71, 20);
+            this.txt_Register_C.Size = new System.Drawing.Size(71, 23);
             this.txt_Register_C.TabIndex = 1;
             // 
             // txt_Register_F
@@ -588,7 +596,7 @@ namespace SLeighT80
             this.txt_Register_F.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txt_Register_F.Location = new System.Drawing.Point(177, 23);
             this.txt_Register_F.Name = "txt_Register_F";
-            this.txt_Register_F.Size = new System.Drawing.Size(71, 20);
+            this.txt_Register_F.Size = new System.Drawing.Size(71, 23);
             this.txt_Register_F.TabIndex = 1;
             // 
             // txt_Register_A
@@ -596,7 +604,7 @@ namespace SLeighT80
             this.txt_Register_A.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txt_Register_A.Location = new System.Drawing.Point(80, 23);
             this.txt_Register_A.Name = "txt_Register_A";
-            this.txt_Register_A.Size = new System.Drawing.Size(71, 20);
+            this.txt_Register_A.Size = new System.Drawing.Size(71, 23);
             this.txt_Register_A.TabIndex = 1;
             // 
             // txt_Register_B
@@ -604,7 +612,7 @@ namespace SLeighT80
             this.txt_Register_B.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txt_Register_B.Location = new System.Drawing.Point(80, 49);
             this.txt_Register_B.Name = "txt_Register_B";
-            this.txt_Register_B.Size = new System.Drawing.Size(71, 20);
+            this.txt_Register_B.Size = new System.Drawing.Size(71, 23);
             this.txt_Register_B.TabIndex = 1;
             // 
             // txt_Register_E
@@ -612,7 +620,7 @@ namespace SLeighT80
             this.txt_Register_E.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txt_Register_E.Location = new System.Drawing.Point(177, 75);
             this.txt_Register_E.Name = "txt_Register_E";
-            this.txt_Register_E.Size = new System.Drawing.Size(71, 20);
+            this.txt_Register_E.Size = new System.Drawing.Size(71, 23);
             this.txt_Register_E.TabIndex = 1;
             // 
             // txt_Register_L
@@ -620,7 +628,7 @@ namespace SLeighT80
             this.txt_Register_L.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txt_Register_L.Location = new System.Drawing.Point(177, 101);
             this.txt_Register_L.Name = "txt_Register_L";
-            this.txt_Register_L.Size = new System.Drawing.Size(71, 20);
+            this.txt_Register_L.Size = new System.Drawing.Size(71, 23);
             this.txt_Register_L.TabIndex = 1;
             // 
             // txt_Register_D
@@ -628,14 +636,14 @@ namespace SLeighT80
             this.txt_Register_D.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txt_Register_D.Location = new System.Drawing.Point(80, 75);
             this.txt_Register_D.Name = "txt_Register_D";
-            this.txt_Register_D.Size = new System.Drawing.Size(71, 20);
+            this.txt_Register_D.Size = new System.Drawing.Size(71, 23);
             this.txt_Register_D.TabIndex = 1;
             // 
             // txt_Register_H
             // 
             this.txt_Register_H.Location = new System.Drawing.Point(80, 101);
             this.txt_Register_H.Name = "txt_Register_H";
-            this.txt_Register_H.Size = new System.Drawing.Size(38, 20);
+            this.txt_Register_H.Size = new System.Drawing.Size(38, 23);
             this.txt_Register_H.TabIndex = 1;
             // 
             // label10
@@ -721,7 +729,7 @@ namespace SLeighT80
             this.txt_CompletedInstructions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txt_CompletedInstructions.Location = new System.Drawing.Point(80, 232);
             this.txt_CompletedInstructions.Name = "txt_CompletedInstructions";
-            this.txt_CompletedInstructions.Size = new System.Drawing.Size(232, 20);
+            this.txt_CompletedInstructions.Size = new System.Drawing.Size(232, 23);
             this.txt_CompletedInstructions.TabIndex = 4;
             // 
             // label63
@@ -1041,7 +1049,7 @@ namespace SLeighT80
             this.tableLayoutPanel4.SetColumnSpan(this.txt_Port_1_In, 2);
             this.txt_Port_1_In.Location = new System.Drawing.Point(126, 193);
             this.txt_Port_1_In.Name = "txt_Port_1_In";
-            this.txt_Port_1_In.Size = new System.Drawing.Size(34, 20);
+            this.txt_Port_1_In.Size = new System.Drawing.Size(34, 23);
             this.txt_Port_1_In.TabIndex = 1;
             // 
             // checkBox7
@@ -1395,7 +1403,7 @@ namespace SLeighT80
             this.tableLayoutPanel4.SetColumnSpan(this.txt_Port_2_In, 2);
             this.txt_Port_2_In.Location = new System.Drawing.Point(126, 219);
             this.txt_Port_2_In.Name = "txt_Port_2_In";
-            this.txt_Port_2_In.Size = new System.Drawing.Size(34, 20);
+            this.txt_Port_2_In.Size = new System.Drawing.Size(34, 23);
             this.txt_Port_2_In.TabIndex = 1;
             // 
             // txt_Port_3_In
@@ -1404,7 +1412,7 @@ namespace SLeighT80
             this.txt_Port_3_In.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txt_Port_3_In.Location = new System.Drawing.Point(126, 245);
             this.txt_Port_3_In.Name = "txt_Port_3_In";
-            this.txt_Port_3_In.Size = new System.Drawing.Size(34, 20);
+            this.txt_Port_3_In.Size = new System.Drawing.Size(34, 23);
             this.txt_Port_3_In.TabIndex = 1;
             // 
             // label67
@@ -1425,7 +1433,7 @@ namespace SLeighT80
             this.txt_Port_1_Out.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txt_Port_1_Out.Location = new System.Drawing.Point(226, 193);
             this.txt_Port_1_Out.Name = "txt_Port_1_Out";
-            this.txt_Port_1_Out.Size = new System.Drawing.Size(34, 20);
+            this.txt_Port_1_Out.Size = new System.Drawing.Size(34, 23);
             this.txt_Port_1_Out.TabIndex = 1;
             // 
             // txt_Port_3_Out
@@ -1434,7 +1442,7 @@ namespace SLeighT80
             this.txt_Port_3_Out.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txt_Port_3_Out.Location = new System.Drawing.Point(226, 219);
             this.txt_Port_3_Out.Name = "txt_Port_3_Out";
-            this.txt_Port_3_Out.Size = new System.Drawing.Size(34, 20);
+            this.txt_Port_3_Out.Size = new System.Drawing.Size(34, 23);
             this.txt_Port_3_Out.TabIndex = 1;
             // 
             // txt_Port_5_Out
@@ -1443,7 +1451,7 @@ namespace SLeighT80
             this.txt_Port_5_Out.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txt_Port_5_Out.Location = new System.Drawing.Point(226, 245);
             this.txt_Port_5_Out.Name = "txt_Port_5_Out";
-            this.txt_Port_5_Out.Size = new System.Drawing.Size(34, 20);
+            this.txt_Port_5_Out.Size = new System.Drawing.Size(34, 23);
             this.txt_Port_5_Out.TabIndex = 1;
             // 
             // label68
@@ -1509,10 +1517,10 @@ namespace SLeighT80
             // textBox3
             // 
             this.textBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox3.Location = new System.Drawing.Point(3, 16);
+            this.textBox3.Location = new System.Drawing.Point(3, 19);
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(630, 113);
+            this.textBox3.Size = new System.Drawing.Size(630, 110);
             this.textBox3.TabIndex = 0;
             // 
             // groupBox2
@@ -1529,10 +1537,10 @@ namespace SLeighT80
             // txt_Assembly_Code
             // 
             this.txt_Assembly_Code.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_Assembly_Code.Location = new System.Drawing.Point(3, 16);
+            this.txt_Assembly_Code.Location = new System.Drawing.Point(3, 19);
             this.txt_Assembly_Code.Multiline = true;
             this.txt_Assembly_Code.Name = "txt_Assembly_Code";
-            this.txt_Assembly_Code.Size = new System.Drawing.Size(630, 525);
+            this.txt_Assembly_Code.Size = new System.Drawing.Size(630, 522);
             this.txt_Assembly_Code.TabIndex = 0;
             // 
             // tabPage4
@@ -1579,7 +1587,7 @@ namespace SLeighT80
             // 
             this.txt_Console.BackColor = System.Drawing.Color.Black;
             this.txt_Console.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_Console.Font = new System.Drawing.Font("Lucida Sans Typewriter", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_Console.Font = new System.Drawing.Font("Lucida Sans Typewriter", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txt_Console.ForeColor = System.Drawing.Color.Lime;
             this.txt_Console.Location = new System.Drawing.Point(0, 0);
             this.txt_Console.Multiline = true;
@@ -1604,11 +1612,12 @@ namespace SLeighT80
             this.tableLayoutPanel7.Controls.Add(this.txt_Steps, 3, 1);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(0, 24);
+            this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 2;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(656, 749);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(674, 760);
             this.tableLayoutPanel7.TabIndex = 3;
             // 
             // btn_Next
@@ -1656,7 +1665,7 @@ namespace SLeighT80
             this.txt_Steps.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txt_Steps.Location = new System.Drawing.Point(213, 723);
             this.txt_Steps.Name = "txt_Steps";
-            this.txt_Steps.Size = new System.Drawing.Size(278, 20);
+            this.txt_Steps.Size = new System.Drawing.Size(278, 23);
             this.txt_Steps.TabIndex = 4;
             this.txt_Steps.Text = "5000000000";
             // 
@@ -1666,29 +1675,22 @@ namespace SLeighT80
             this.contextMenuStrip2.Name = "contextMenuStrip2";
             this.contextMenuStrip2.Size = new System.Drawing.Size(61, 4);
             // 
-            // loadToolStripMenuItem
-            // 
-            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.loadToolStripMenuItem.Text = "Load";
-            this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
-            // 
             // fMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(656, 773);
+            this.ClientSize = new System.Drawing.Size(674, 784);
             this.Controls.Add(this.tableLayoutPanel7);
             this.Controls.Add(this.menuStrip1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "fMain";
             this.Text = "Intel 8080 Emulator";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
