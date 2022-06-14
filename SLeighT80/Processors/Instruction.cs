@@ -13,7 +13,7 @@ namespace SLeighT80.Processors
         /// <param name="length"></param>
         /// <param name="cycles"></param>
         /// <param name="altCycles"></param>
-        /// <param name="executionMethod"></param>
+        /// <param name="executionMethod">TODO - Use the base class</param>
         public Instruction(string mnemonic, byte opCode, byte length, byte cycles, byte altCycles, Action<i8080.i8080, byte, byte> executionMethod = null)
         {
             Mnemonic = mnemonic;

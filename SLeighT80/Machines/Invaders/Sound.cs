@@ -121,7 +121,7 @@ namespace SLeighT80.Machines.Invaders
         };
 
         /// <summary>
-        /// Call the from the IN instruction to play the sounds as per the original hardware's sound board
+        /// Called from the IN instruction to play the sounds as per the original hardware's sound board
         /// </summary>
         /// <param name="machine"></param>
         internal static void PlaySounds(i8080 machine)

@@ -24,6 +24,7 @@ namespace SLeighT80.Machines.Invaders
         public static void Check(i8080 machine)
         {
             State state;
+
             if (machine.controller.GetState(out state))
             {
                 CheckXInputButtons(machine, state, GamepadButtonFlags.Back, 0x01);

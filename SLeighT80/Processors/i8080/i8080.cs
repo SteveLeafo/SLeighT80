@@ -58,11 +58,10 @@ namespace SLeighT80.Processors.i8080
         internal int Frames;
 
         /// <summary>
-        /// 
+        /// Constructor - requires RAM to be usefull
         /// </summary>
-        public i8080()
+        public i8080(byte[] ram) : base(ram)
         {
-            RAM = new byte[65536];
             for (int b = 0x00; b <= 0xff; ++b)
             {
                 ParityLookUp[b] = Utilities.Parity(b, 8);
@@ -70,22 +69,13 @@ namespace SLeighT80.Processors.i8080
         }
 
         /// <summary>
-        /// 
+        /// Runs the next comment
         /// </summary>
         public void RunNext()
         {
             if (InterruptPending && InterruptsEnabled && InterruptDelay == 0)
             {
-                InterruptPending = false;
-                InterruptsEnabled = false;
-                Instruction instruction = OpCodes[InterruptOperation];
-
-                if (PC < RAM.Length - 2)
-                {
-                    instruction.Execute(this, RAM[PC + 1], RAM[PC + 2]);
-                    Codes[instruction.OpCode] = true;
-                    Cycles += (UInt64)instruction.Cycles;
-                }
+                ExecuteInterrupt();
             }
             else
             {
@@ -93,8 +83,59 @@ namespace SLeighT80.Processors.i8080
             }
         }
 
+
         /// <summary>
-        /// 
+        /// Executes the next command and processors the program counter register
+        /// </summary>
+        private void Execute()
+        {
+            byte code = RAM[PC++];
+            Codes[code] = true;
+            Instruction instruction = OpCodes[code];
+
+            if (InterruptDelay > 0)
+            {
+                InterruptDelay--;
+            }
+
+            if (PC < RAM.Length - 2)
+            {
+                byte b1 = 0, b2 = 0;
+                if (instruction.Length > 1)
+                {
+                    b1 = RAM[PC++];
+                }
+                if (instruction.Length > 2)
+                {
+                    b2 = RAM[PC++];
+                }
+
+                instruction.Execute(this, b1, b2);
+
+                Cycles += (UInt64)instruction.Cycles;
+            }
+            NumberOfExecutedInstructions++;
+        }
+
+        /// <summary>
+        /// Executes the interrupt handler
+        /// </summary>
+        private void ExecuteInterrupt()
+        {
+            InterruptPending = false;
+            InterruptsEnabled = false;
+            Instruction instruction = OpCodes[InterruptOperation];
+
+            if (PC < RAM.Length - 2)
+            {
+                instruction.Execute(this, RAM[PC + 1], RAM[PC + 2]);
+                Codes[instruction.OpCode] = true;
+                Cycles += (UInt64)instruction.Cycles;
+            }
+        }
+
+        /// <summary>
+        /// Installs the outout routines
         /// </summary>
         internal void IntallOutputRoutines()
         {
@@ -109,7 +150,7 @@ namespace SLeighT80.Processors.i8080
         }
 
         /// <summary>
-        /// 
+        /// Triggers and interupt and sets the command to run - 2 more commands will execute before the interrupt will run
         /// </summary>
         /// <param name="opcode"></param>
         /// <returns></returns>
@@ -128,7 +169,7 @@ namespace SLeighT80.Processors.i8080
         }
 
         /// <summary>
-        /// 
+        /// Resets the processor to its default state
         /// </summary>
         /// <param name="sp"></param>
         public void Reset(ushort sp)
@@ -174,38 +215,6 @@ namespace SLeighT80.Processors.i8080
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        private void Execute()
-        {
-            byte code = RAM[PC++];
-            Codes[code] = true;
-            Instruction instruction = OpCodes[code];
-
-            if (InterruptDelay > 0)
-            {
-                InterruptDelay--;
-            }
-
-            if (PC < RAM.Length - 2)
-            {
-                byte b1 = 0, b2 = 0;
-                if (instruction.Length > 1)
-                {
-                    b1 = RAM[PC++];
-                }
-                if (instruction.Length > 2)
-                {
-                    b2 = RAM[PC++];
-                }
-
-                instruction.Execute(this, b1, b2);
-
-                Cycles  += (UInt64)instruction.Cycles;
-            }
-            NumberOfExecutedInstructions++;
-        }
 
         /// <summary>
         /// Writes a byte of data to memory - adds checks to not overwrite ROM

@@ -18,7 +18,7 @@ namespace SLeighT80
     public partial class fMain : Form
     {
         // Our space invaders machine
-        readonly i8080 m_machine = new i8080();
+        readonly i8080 m_machine = new i8080(new byte[65536]);
 
         // An 8080 machine code file
         string m_filename = string.Empty;
@@ -39,9 +39,6 @@ namespace SLeighT80
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
             KeyPreview = true;
-
-            //m_byteViewer = new ByteViewer { Dock = DockStyle.Fill };
-            //tabPage1.Controls.Add(m_byteViewer);
 
             // Install the 8080 instruction set to this machine
             i8080InstructionSet.Install(m_machine);

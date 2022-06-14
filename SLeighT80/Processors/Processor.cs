@@ -51,6 +51,10 @@ namespace SLeighT80.Processors
         // The operation that will be executed when the next interrupt is triggered
         internal byte InterruptOperation;
 
+        protected Processor(byte[] ram)
+        {
+            RAM = ram;
+        }
 
         /// <summary>
         /// Will create an array the can be directly addressed via op-code
