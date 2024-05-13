@@ -120,33 +120,42 @@ namespace SLeighT80.Machines.Invaders
             activeSamples[7]
         };
 
+        static byte PORT_IN_1 = 0;
+        static byte PORT_IN_2 = 1;
+
+        static byte PORT_OUT_3 = 2;
+        static byte PORT_OUT_5 = 3;
+
+        static byte SHIFT_LSB = 4;
+        static byte SHIFT_MSB = 5;
+
         /// <summary>
         /// Called from the IN instruction to play the sounds as per the original hardware's sound board
         /// </summary>
         /// <param name="machine"></param>
         internal static void PlaySounds(i8080 machine)
         {
-            if (machine.PORT_OUT_3 != LastOutPort3)
+            if (machine.Ports[PORT_OUT_3] != LastOutPort3)
             {
-                if ((machine.PORT_OUT_3 & 0x1) != 0 && (LastOutPort3 & 0x1) == 0)
+                if ((machine.Ports[PORT_OUT_3] & 0x1) != 0 && (LastOutPort3 & 0x1) == 0)
                 {
                     PlayLoopingSoundFile(Port3Sounds[0]);
                 }
-                else if ((machine.PORT_OUT_3 & 0x1) == 0 && (LastOutPort3 & 0x1) != 0)
+                else if ((machine.Ports[PORT_OUT_3] & 0x1) == 0 && (LastOutPort3 & 0x1) != 0)
                 {
                     StopLoopingSoundFile();
                 }
                 else
                 {
-                    PlaySound(machine.PORT_OUT_3, LastOutPort3, Port3Sounds, true);
+                    PlaySound(machine.Ports[PORT_OUT_3], LastOutPort3, Port3Sounds, true);
                 }
-                LastOutPort3 = machine.PORT_OUT_3;
+                LastOutPort3 = machine.Ports[PORT_OUT_3];
             }
 
-            if (machine.PORT_OUT_5 != m_lastOutPort5)
+            if (machine.Ports[PORT_OUT_5] != m_lastOutPort5)
             {
-                PlaySound(machine.PORT_OUT_5, m_lastOutPort5, Port5Sounds, true);
-                m_lastOutPort5 = machine.PORT_OUT_5;
+                PlaySound(machine.Ports[PORT_OUT_5], m_lastOutPort5, Port5Sounds, true);
+                m_lastOutPort5 = machine.Ports[PORT_OUT_5];
             }
         }
 

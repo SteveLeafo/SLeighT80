@@ -38,6 +38,7 @@ namespace SLeighT80
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.assemblerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openASMFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveASMFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.assembleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadAoutFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.emulationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -223,6 +224,7 @@ namespace SLeighT80
             // 
             this.assemblerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openASMFileToolStripMenuItem,
+            this.saveASMFileToolStripMenuItem,
             this.assembleToolStripMenuItem,
             this.loadAoutFileToolStripMenuItem});
             this.assemblerToolStripMenuItem.Name = "assemblerToolStripMenuItem";
@@ -234,6 +236,14 @@ namespace SLeighT80
             this.openASMFileToolStripMenuItem.Name = "openASMFileToolStripMenuItem";
             this.openASMFileToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.openASMFileToolStripMenuItem.Text = "Open .ASM file";
+            this.openASMFileToolStripMenuItem.Click += new System.EventHandler(this.openASMFileToolStripMenuItem_Click);
+            // 
+            // saveASMFileToolStripMenuItem
+            // 
+            this.saveASMFileToolStripMenuItem.Name = "saveASMFileToolStripMenuItem";
+            this.saveASMFileToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.saveASMFileToolStripMenuItem.Text = "Save .ASM file";
+            this.saveASMFileToolStripMenuItem.Click += new System.EventHandler(this.saveASMFileToolStripMenuItem_Click);
             // 
             // assembleToolStripMenuItem
             // 
@@ -247,6 +257,7 @@ namespace SLeighT80
             this.loadAoutFileToolStripMenuItem.Name = "loadAoutFileToolStripMenuItem";
             this.loadAoutFileToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.loadAoutFileToolStripMenuItem.Text = "Load a.out file";
+            this.loadAoutFileToolStripMenuItem.Click += new System.EventHandler(this.loadAoutFileToolStripMenuItem_Click);
             // 
             // emulationToolStripMenuItem
             // 
@@ -312,15 +323,15 @@ namespace SLeighT80
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(650, 714);
+            this.tabControl1.Size = new System.Drawing.Size(668, 725);
             this.tabControl1.TabIndex = 2;
             // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.tableLayoutPanel1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(642, 688);
+            this.tabPage2.Size = new System.Drawing.Size(660, 697);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Debug";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -340,25 +351,27 @@ namespace SLeighT80
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(642, 688);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(660, 697);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // txt_LocalRAM
             // 
             this.txt_LocalRAM.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_LocalRAM.Location = new System.Drawing.Point(324, 415);
+            this.txt_LocalRAM.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txt_LocalRAM.Location = new System.Drawing.Point(333, 421);
             this.txt_LocalRAM.Multiline = true;
             this.txt_LocalRAM.Name = "txt_LocalRAM";
-            this.txt_LocalRAM.Size = new System.Drawing.Size(315, 270);
+            this.txt_LocalRAM.Size = new System.Drawing.Size(324, 273);
             this.txt_LocalRAM.TabIndex = 1;
             // 
             // txt_NextInstruction
             // 
             this.txt_NextInstruction.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_NextInstruction.Location = new System.Drawing.Point(3, 415);
+            this.txt_NextInstruction.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txt_NextInstruction.Location = new System.Drawing.Point(3, 421);
             this.txt_NextInstruction.Multiline = true;
             this.txt_NextInstruction.Name = "txt_NextInstruction";
-            this.txt_NextInstruction.Size = new System.Drawing.Size(315, 270);
+            this.txt_NextInstruction.Size = new System.Drawing.Size(324, 273);
             this.txt_NextInstruction.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -418,34 +431,34 @@ namespace SLeighT80
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(315, 406);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(324, 412);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // txt_Pointer_SP
             // 
             this.tableLayoutPanel2.SetColumnSpan(this.txt_Pointer_SP, 5);
             this.txt_Pointer_SP.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_Pointer_SP.Location = new System.Drawing.Point(80, 183);
+            this.txt_Pointer_SP.Location = new System.Drawing.Point(81, 198);
             this.txt_Pointer_SP.Name = "txt_Pointer_SP";
-            this.txt_Pointer_SP.Size = new System.Drawing.Size(232, 23);
+            this.txt_Pointer_SP.Size = new System.Drawing.Size(240, 23);
             this.txt_Pointer_SP.TabIndex = 1;
             // 
             // txt_Pointer_IP
             // 
             this.tableLayoutPanel2.SetColumnSpan(this.txt_Pointer_IP, 5);
             this.txt_Pointer_IP.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_Pointer_IP.Location = new System.Drawing.Point(80, 157);
+            this.txt_Pointer_IP.Location = new System.Drawing.Point(81, 169);
             this.txt_Pointer_IP.Name = "txt_Pointer_IP";
-            this.txt_Pointer_IP.Size = new System.Drawing.Size(232, 23);
+            this.txt_Pointer_IP.Size = new System.Drawing.Size(240, 23);
             this.txt_Pointer_IP.TabIndex = 1;
             // 
             // label17
             // 
             this.label17.AutoSize = true;
             this.label17.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label17.Location = new System.Drawing.Point(3, 180);
+            this.label17.Location = new System.Drawing.Point(3, 195);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(71, 26);
+            this.label17.Size = new System.Drawing.Size(72, 29);
             this.label17.TabIndex = 0;
             this.label17.Text = "SP";
             this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -455,9 +468,9 @@ namespace SLeighT80
             this.label61.AutoSize = true;
             this.tableLayoutPanel2.SetColumnSpan(this.label61, 3);
             this.label61.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label61.Location = new System.Drawing.Point(3, 124);
+            this.label61.Location = new System.Drawing.Point(3, 136);
             this.label61.Name = "label61";
-            this.label61.Size = new System.Drawing.Size(168, 30);
+            this.label61.Size = new System.Drawing.Size(171, 30);
             this.label61.TabIndex = 0;
             this.label61.Text = "Pointers";
             this.label61.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -469,7 +482,7 @@ namespace SLeighT80
             this.label20.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label20.Location = new System.Drawing.Point(3, 0);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(245, 20);
+            this.label20.Size = new System.Drawing.Size(249, 20);
             this.label20.TabIndex = 0;
             this.label20.Text = "Registers";
             // 
@@ -477,9 +490,9 @@ namespace SLeighT80
             // 
             this.label18.AutoSize = true;
             this.label18.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label18.Location = new System.Drawing.Point(3, 154);
+            this.label18.Location = new System.Drawing.Point(3, 166);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(71, 26);
+            this.label18.Size = new System.Drawing.Size(72, 29);
             this.label18.TabIndex = 0;
             this.label18.Text = "PC";
             this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -488,9 +501,9 @@ namespace SLeighT80
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(254, 46);
+            this.label1.Location = new System.Drawing.Point(258, 49);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(19, 26);
+            this.label1.Size = new System.Drawing.Size(25, 29);
             this.label1.TabIndex = 0;
             this.label1.Text = "<--";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -501,7 +514,7 @@ namespace SLeighT80
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Location = new System.Drawing.Point(3, 20);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 26);
+            this.label2.Size = new System.Drawing.Size(72, 29);
             this.label2.TabIndex = 0;
             this.label2.Text = "A";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -510,9 +523,9 @@ namespace SLeighT80
             // 
             this.label3.AutoSize = true;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Location = new System.Drawing.Point(157, 20);
+            this.label3.Location = new System.Drawing.Point(159, 20);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(14, 26);
+            this.label3.Size = new System.Drawing.Size(15, 29);
             this.label3.TabIndex = 0;
             this.label3.Text = "F";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -521,9 +534,9 @@ namespace SLeighT80
             // 
             this.label4.AutoSize = true;
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Location = new System.Drawing.Point(3, 46);
+            this.label4.Location = new System.Drawing.Point(3, 49);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(71, 26);
+            this.label4.Size = new System.Drawing.Size(72, 29);
             this.label4.TabIndex = 0;
             this.label4.Text = "B";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -532,9 +545,9 @@ namespace SLeighT80
             // 
             this.label5.AutoSize = true;
             this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Location = new System.Drawing.Point(3, 72);
+            this.label5.Location = new System.Drawing.Point(3, 78);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(71, 26);
+            this.label5.Size = new System.Drawing.Size(72, 29);
             this.label5.TabIndex = 0;
             this.label5.Text = "D";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -543,9 +556,9 @@ namespace SLeighT80
             // 
             this.label6.AutoSize = true;
             this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label6.Location = new System.Drawing.Point(3, 98);
+            this.label6.Location = new System.Drawing.Point(3, 107);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(71, 26);
+            this.label6.Size = new System.Drawing.Size(72, 29);
             this.label6.TabIndex = 0;
             this.label6.Text = "H";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -554,9 +567,9 @@ namespace SLeighT80
             // 
             this.label7.AutoSize = true;
             this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label7.Location = new System.Drawing.Point(157, 46);
+            this.label7.Location = new System.Drawing.Point(159, 49);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(14, 26);
+            this.label7.Size = new System.Drawing.Size(15, 29);
             this.label7.TabIndex = 0;
             this.label7.Text = "C";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -565,9 +578,9 @@ namespace SLeighT80
             // 
             this.label8.AutoSize = true;
             this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label8.Location = new System.Drawing.Point(157, 72);
+            this.label8.Location = new System.Drawing.Point(159, 78);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(14, 26);
+            this.label8.Size = new System.Drawing.Size(15, 29);
             this.label8.TabIndex = 0;
             this.label8.Text = "E";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -576,9 +589,9 @@ namespace SLeighT80
             // 
             this.label9.AutoSize = true;
             this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label9.Location = new System.Drawing.Point(157, 98);
+            this.label9.Location = new System.Drawing.Point(159, 107);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(14, 26);
+            this.label9.Size = new System.Drawing.Size(15, 29);
             this.label9.TabIndex = 0;
             this.label9.Text = "L";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -586,62 +599,62 @@ namespace SLeighT80
             // txt_Register_C
             // 
             this.txt_Register_C.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_Register_C.Location = new System.Drawing.Point(177, 49);
+            this.txt_Register_C.Location = new System.Drawing.Point(180, 52);
             this.txt_Register_C.Name = "txt_Register_C";
-            this.txt_Register_C.Size = new System.Drawing.Size(71, 23);
+            this.txt_Register_C.Size = new System.Drawing.Size(72, 23);
             this.txt_Register_C.TabIndex = 1;
             // 
             // txt_Register_F
             // 
             this.txt_Register_F.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_Register_F.Location = new System.Drawing.Point(177, 23);
+            this.txt_Register_F.Location = new System.Drawing.Point(180, 23);
             this.txt_Register_F.Name = "txt_Register_F";
-            this.txt_Register_F.Size = new System.Drawing.Size(71, 23);
+            this.txt_Register_F.Size = new System.Drawing.Size(72, 23);
             this.txt_Register_F.TabIndex = 1;
             // 
             // txt_Register_A
             // 
             this.txt_Register_A.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_Register_A.Location = new System.Drawing.Point(80, 23);
+            this.txt_Register_A.Location = new System.Drawing.Point(81, 23);
             this.txt_Register_A.Name = "txt_Register_A";
-            this.txt_Register_A.Size = new System.Drawing.Size(71, 23);
+            this.txt_Register_A.Size = new System.Drawing.Size(72, 23);
             this.txt_Register_A.TabIndex = 1;
             // 
             // txt_Register_B
             // 
             this.txt_Register_B.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_Register_B.Location = new System.Drawing.Point(80, 49);
+            this.txt_Register_B.Location = new System.Drawing.Point(81, 52);
             this.txt_Register_B.Name = "txt_Register_B";
-            this.txt_Register_B.Size = new System.Drawing.Size(71, 23);
+            this.txt_Register_B.Size = new System.Drawing.Size(72, 23);
             this.txt_Register_B.TabIndex = 1;
             // 
             // txt_Register_E
             // 
             this.txt_Register_E.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_Register_E.Location = new System.Drawing.Point(177, 75);
+            this.txt_Register_E.Location = new System.Drawing.Point(180, 81);
             this.txt_Register_E.Name = "txt_Register_E";
-            this.txt_Register_E.Size = new System.Drawing.Size(71, 23);
+            this.txt_Register_E.Size = new System.Drawing.Size(72, 23);
             this.txt_Register_E.TabIndex = 1;
             // 
             // txt_Register_L
             // 
             this.txt_Register_L.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_Register_L.Location = new System.Drawing.Point(177, 101);
+            this.txt_Register_L.Location = new System.Drawing.Point(180, 110);
             this.txt_Register_L.Name = "txt_Register_L";
-            this.txt_Register_L.Size = new System.Drawing.Size(71, 23);
+            this.txt_Register_L.Size = new System.Drawing.Size(72, 23);
             this.txt_Register_L.TabIndex = 1;
             // 
             // txt_Register_D
             // 
             this.txt_Register_D.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_Register_D.Location = new System.Drawing.Point(80, 75);
+            this.txt_Register_D.Location = new System.Drawing.Point(81, 81);
             this.txt_Register_D.Name = "txt_Register_D";
-            this.txt_Register_D.Size = new System.Drawing.Size(71, 23);
+            this.txt_Register_D.Size = new System.Drawing.Size(72, 23);
             this.txt_Register_D.TabIndex = 1;
             // 
             // txt_Register_H
             // 
-            this.txt_Register_H.Location = new System.Drawing.Point(80, 101);
+            this.txt_Register_H.Location = new System.Drawing.Point(81, 110);
             this.txt_Register_H.Name = "txt_Register_H";
             this.txt_Register_H.Size = new System.Drawing.Size(38, 23);
             this.txt_Register_H.TabIndex = 1;
@@ -650,9 +663,9 @@ namespace SLeighT80
             // 
             this.label10.AutoSize = true;
             this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label10.Location = new System.Drawing.Point(254, 20);
+            this.label10.Location = new System.Drawing.Point(258, 20);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(19, 26);
+            this.label10.Size = new System.Drawing.Size(25, 29);
             this.label10.TabIndex = 0;
             this.label10.Text = "<--";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -661,9 +674,9 @@ namespace SLeighT80
             // 
             this.label11.AutoSize = true;
             this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label11.Location = new System.Drawing.Point(254, 72);
+            this.label11.Location = new System.Drawing.Point(258, 78);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(19, 26);
+            this.label11.Size = new System.Drawing.Size(25, 29);
             this.label11.TabIndex = 0;
             this.label11.Text = "<--";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -672,9 +685,9 @@ namespace SLeighT80
             // 
             this.label12.AutoSize = true;
             this.label12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label12.Location = new System.Drawing.Point(254, 98);
+            this.label12.Location = new System.Drawing.Point(258, 107);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(19, 26);
+            this.label12.Size = new System.Drawing.Size(25, 29);
             this.label12.TabIndex = 0;
             this.label12.Text = "<--";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -683,9 +696,9 @@ namespace SLeighT80
             // 
             this.label13.AutoSize = true;
             this.label13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label13.Location = new System.Drawing.Point(279, 20);
+            this.label13.Location = new System.Drawing.Point(289, 20);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(33, 26);
+            this.label13.Size = new System.Drawing.Size(32, 29);
             this.label13.TabIndex = 0;
             this.label13.Text = "PSW";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -694,9 +707,9 @@ namespace SLeighT80
             // 
             this.label14.AutoSize = true;
             this.label14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label14.Location = new System.Drawing.Point(279, 46);
+            this.label14.Location = new System.Drawing.Point(289, 49);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(33, 26);
+            this.label14.Size = new System.Drawing.Size(32, 29);
             this.label14.TabIndex = 0;
             this.label14.Text = "B";
             this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -705,9 +718,9 @@ namespace SLeighT80
             // 
             this.label15.AutoSize = true;
             this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label15.Location = new System.Drawing.Point(279, 72);
+            this.label15.Location = new System.Drawing.Point(289, 78);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(33, 26);
+            this.label15.Size = new System.Drawing.Size(32, 29);
             this.label15.TabIndex = 0;
             this.label15.Text = "D";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -716,9 +729,9 @@ namespace SLeighT80
             // 
             this.label16.AutoSize = true;
             this.label16.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label16.Location = new System.Drawing.Point(279, 98);
+            this.label16.Location = new System.Drawing.Point(289, 107);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(33, 26);
+            this.label16.Size = new System.Drawing.Size(32, 29);
             this.label16.TabIndex = 0;
             this.label16.Text = "H";
             this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -727,9 +740,9 @@ namespace SLeighT80
             // 
             this.tableLayoutPanel2.SetColumnSpan(this.txt_CompletedInstructions, 5);
             this.txt_CompletedInstructions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_CompletedInstructions.Location = new System.Drawing.Point(80, 232);
+            this.txt_CompletedInstructions.Location = new System.Drawing.Point(81, 252);
             this.txt_CompletedInstructions.Name = "txt_CompletedInstructions";
-            this.txt_CompletedInstructions.Size = new System.Drawing.Size(232, 23);
+            this.txt_CompletedInstructions.Size = new System.Drawing.Size(240, 23);
             this.txt_CompletedInstructions.TabIndex = 4;
             // 
             // label63
@@ -737,9 +750,9 @@ namespace SLeighT80
             this.label63.AutoSize = true;
             this.tableLayoutPanel2.SetColumnSpan(this.label63, 5);
             this.label63.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label63.Location = new System.Drawing.Point(3, 216);
+            this.label63.Location = new System.Drawing.Point(3, 234);
             this.label63.Name = "label63";
-            this.label63.Size = new System.Drawing.Size(270, 13);
+            this.label63.Size = new System.Drawing.Size(280, 15);
             this.label63.TabIndex = 3;
             this.label63.Text = "Completed Instructions";
             this.label63.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -822,7 +835,7 @@ namespace SLeighT80
             this.tableLayoutPanel4.Controls.Add(this.label68, 6, 16);
             this.tableLayoutPanel4.Controls.Add(this.label69, 6, 17);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(324, 3);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(333, 3);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 18;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
@@ -843,13 +856,13 @@ namespace SLeighT80
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(315, 406);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(324, 412);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(66, 20);
+            this.label21.Location = new System.Drawing.Point(71, 20);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(13, 1);
             this.label21.TabIndex = 0;
@@ -858,7 +871,7 @@ namespace SLeighT80
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(86, 20);
+            this.label22.Location = new System.Drawing.Point(91, 20);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(13, 1);
             this.label22.TabIndex = 0;
@@ -867,7 +880,7 @@ namespace SLeighT80
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(106, 20);
+            this.label23.Location = new System.Drawing.Point(111, 20);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(13, 1);
             this.label23.TabIndex = 0;
@@ -876,7 +889,7 @@ namespace SLeighT80
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(126, 20);
+            this.label24.Location = new System.Drawing.Point(131, 20);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(13, 1);
             this.label24.TabIndex = 0;
@@ -885,7 +898,7 @@ namespace SLeighT80
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(146, 20);
+            this.label25.Location = new System.Drawing.Point(151, 20);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(13, 1);
             this.label25.TabIndex = 0;
@@ -894,7 +907,7 @@ namespace SLeighT80
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(166, 20);
+            this.label26.Location = new System.Drawing.Point(171, 20);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(13, 1);
             this.label26.TabIndex = 0;
@@ -903,7 +916,7 @@ namespace SLeighT80
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(186, 20);
+            this.label27.Location = new System.Drawing.Point(191, 20);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(13, 1);
             this.label27.TabIndex = 0;
@@ -912,7 +925,7 @@ namespace SLeighT80
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(206, 20);
+            this.label28.Location = new System.Drawing.Point(211, 20);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(13, 1);
             this.label28.TabIndex = 0;
@@ -921,79 +934,79 @@ namespace SLeighT80
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(66, 20);
+            this.label29.Location = new System.Drawing.Point(71, 20);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(14, 13);
+            this.label29.Size = new System.Drawing.Size(13, 15);
             this.label29.TabIndex = 0;
             this.label29.Text = "S";
             // 
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(86, 20);
+            this.label30.Location = new System.Drawing.Point(91, 20);
             this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(14, 13);
+            this.label30.Size = new System.Drawing.Size(14, 15);
             this.label30.TabIndex = 0;
             this.label30.Text = "Z";
             // 
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(106, 20);
+            this.label31.Location = new System.Drawing.Point(111, 20);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(13, 13);
+            this.label31.Size = new System.Drawing.Size(13, 15);
             this.label31.TabIndex = 0;
             this.label31.Text = "0";
             // 
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(126, 20);
+            this.label32.Location = new System.Drawing.Point(131, 20);
             this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(14, 13);
+            this.label32.Size = new System.Drawing.Size(14, 15);
             this.label32.TabIndex = 0;
             this.label32.Text = "A";
             // 
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(146, 20);
+            this.label33.Location = new System.Drawing.Point(151, 20);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(13, 13);
+            this.label33.Size = new System.Drawing.Size(13, 15);
             this.label33.TabIndex = 0;
             this.label33.Text = "0";
             // 
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(166, 20);
+            this.label34.Location = new System.Drawing.Point(171, 20);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(14, 13);
+            this.label34.Size = new System.Drawing.Size(14, 15);
             this.label34.TabIndex = 0;
             this.label34.Text = "P";
             // 
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(186, 20);
+            this.label35.Location = new System.Drawing.Point(191, 20);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(13, 13);
+            this.label35.Size = new System.Drawing.Size(13, 15);
             this.label35.TabIndex = 0;
             this.label35.Text = "1";
             // 
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(206, 20);
+            this.label36.Location = new System.Drawing.Point(211, 20);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(14, 13);
+            this.label36.Size = new System.Drawing.Size(14, 15);
             this.label36.TabIndex = 0;
             this.label36.Text = "C";
             // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(66, 36);
+            this.checkBox1.Location = new System.Drawing.Point(71, 38);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(14, 14);
             this.checkBox1.TabIndex = 1;
@@ -1002,7 +1015,7 @@ namespace SLeighT80
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(86, 36);
+            this.checkBox2.Location = new System.Drawing.Point(91, 38);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(14, 14);
             this.checkBox2.TabIndex = 1;
@@ -1011,7 +1024,7 @@ namespace SLeighT80
             // checkBox3
             // 
             this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(106, 36);
+            this.checkBox3.Location = new System.Drawing.Point(111, 38);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(14, 14);
             this.checkBox3.TabIndex = 1;
@@ -1020,7 +1033,7 @@ namespace SLeighT80
             // checkBox4
             // 
             this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(126, 36);
+            this.checkBox4.Location = new System.Drawing.Point(131, 38);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(14, 14);
             this.checkBox4.TabIndex = 1;
@@ -1029,7 +1042,7 @@ namespace SLeighT80
             // checkBox5
             // 
             this.checkBox5.AutoSize = true;
-            this.checkBox5.Location = new System.Drawing.Point(146, 36);
+            this.checkBox5.Location = new System.Drawing.Point(151, 38);
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.Size = new System.Drawing.Size(14, 14);
             this.checkBox5.TabIndex = 1;
@@ -1038,7 +1051,7 @@ namespace SLeighT80
             // checkBox6
             // 
             this.checkBox6.AutoSize = true;
-            this.checkBox6.Location = new System.Drawing.Point(166, 36);
+            this.checkBox6.Location = new System.Drawing.Point(171, 38);
             this.checkBox6.Name = "checkBox6";
             this.checkBox6.Size = new System.Drawing.Size(14, 14);
             this.checkBox6.TabIndex = 1;
@@ -1047,7 +1060,7 @@ namespace SLeighT80
             // txt_Port_1_In
             // 
             this.tableLayoutPanel4.SetColumnSpan(this.txt_Port_1_In, 2);
-            this.txt_Port_1_In.Location = new System.Drawing.Point(126, 193);
+            this.txt_Port_1_In.Location = new System.Drawing.Point(131, 273);
             this.txt_Port_1_In.Name = "txt_Port_1_In";
             this.txt_Port_1_In.Size = new System.Drawing.Size(34, 23);
             this.txt_Port_1_In.TabIndex = 1;
@@ -1055,7 +1068,7 @@ namespace SLeighT80
             // checkBox7
             // 
             this.checkBox7.AutoSize = true;
-            this.checkBox7.Location = new System.Drawing.Point(186, 36);
+            this.checkBox7.Location = new System.Drawing.Point(191, 38);
             this.checkBox7.Name = "checkBox7";
             this.checkBox7.Size = new System.Drawing.Size(14, 14);
             this.checkBox7.TabIndex = 1;
@@ -1064,7 +1077,7 @@ namespace SLeighT80
             // checkBox8
             // 
             this.checkBox8.AutoSize = true;
-            this.checkBox8.Location = new System.Drawing.Point(206, 36);
+            this.checkBox8.Location = new System.Drawing.Point(211, 38);
             this.checkBox8.Name = "checkBox8";
             this.checkBox8.Size = new System.Drawing.Size(14, 14);
             this.checkBox8.TabIndex = 1;
@@ -1074,9 +1087,9 @@ namespace SLeighT80
             // 
             this.label37.AutoSize = true;
             this.label37.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label37.Location = new System.Drawing.Point(66, 53);
+            this.label37.Location = new System.Drawing.Point(71, 55);
             this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(14, 13);
+            this.label37.Size = new System.Drawing.Size(14, 15);
             this.label37.TabIndex = 0;
             this.label37.Text = "S";
             this.label37.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1085,9 +1098,9 @@ namespace SLeighT80
             // 
             this.label39.AutoSize = true;
             this.label39.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label39.Location = new System.Drawing.Point(86, 53);
+            this.label39.Location = new System.Drawing.Point(91, 55);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(14, 13);
+            this.label39.Size = new System.Drawing.Size(14, 15);
             this.label39.TabIndex = 0;
             this.label39.Text = "-";
             this.label39.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1096,9 +1109,9 @@ namespace SLeighT80
             // 
             this.label40.AutoSize = true;
             this.label40.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label40.Location = new System.Drawing.Point(86, 66);
+            this.label40.Location = new System.Drawing.Point(91, 70);
             this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(14, 13);
+            this.label40.Size = new System.Drawing.Size(14, 15);
             this.label40.TabIndex = 0;
             this.label40.Text = "-";
             this.label40.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1107,9 +1120,9 @@ namespace SLeighT80
             // 
             this.label41.AutoSize = true;
             this.label41.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label41.Location = new System.Drawing.Point(86, 79);
+            this.label41.Location = new System.Drawing.Point(91, 85);
             this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(14, 13);
+            this.label41.Size = new System.Drawing.Size(14, 30);
             this.label41.TabIndex = 0;
             this.label41.Text = "-";
             this.label41.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1118,9 +1131,9 @@ namespace SLeighT80
             // 
             this.label42.AutoSize = true;
             this.label42.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label42.Location = new System.Drawing.Point(86, 92);
+            this.label42.Location = new System.Drawing.Point(91, 115);
             this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(14, 13);
+            this.label42.Size = new System.Drawing.Size(14, 30);
             this.label42.TabIndex = 0;
             this.label42.Text = "-";
             this.label42.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1129,9 +1142,9 @@ namespace SLeighT80
             // 
             this.label43.AutoSize = true;
             this.label43.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label43.Location = new System.Drawing.Point(86, 105);
+            this.label43.Location = new System.Drawing.Point(91, 145);
             this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(14, 13);
+            this.label43.Size = new System.Drawing.Size(14, 30);
             this.label43.TabIndex = 0;
             this.label43.Text = "-";
             this.label43.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1140,9 +1153,9 @@ namespace SLeighT80
             // 
             this.label44.AutoSize = true;
             this.label44.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label44.Location = new System.Drawing.Point(86, 118);
+            this.label44.Location = new System.Drawing.Point(91, 175);
             this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(14, 13);
+            this.label44.Size = new System.Drawing.Size(14, 15);
             this.label44.TabIndex = 0;
             this.label44.Text = "-";
             this.label44.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1151,9 +1164,9 @@ namespace SLeighT80
             // 
             this.label45.AutoSize = true;
             this.label45.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label45.Location = new System.Drawing.Point(86, 131);
+            this.label45.Location = new System.Drawing.Point(91, 190);
             this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(14, 13);
+            this.label45.Size = new System.Drawing.Size(14, 30);
             this.label45.TabIndex = 0;
             this.label45.Text = "-";
             this.label45.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1162,9 +1175,9 @@ namespace SLeighT80
             // 
             this.label46.AutoSize = true;
             this.label46.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label46.Location = new System.Drawing.Point(86, 144);
+            this.label46.Location = new System.Drawing.Point(91, 220);
             this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(14, 13);
+            this.label46.Size = new System.Drawing.Size(14, 15);
             this.label46.TabIndex = 0;
             this.label46.Text = "-";
             this.label46.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1173,9 +1186,9 @@ namespace SLeighT80
             // 
             this.label47.AutoSize = true;
             this.label47.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label47.Location = new System.Drawing.Point(66, 66);
+            this.label47.Location = new System.Drawing.Point(71, 70);
             this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(14, 13);
+            this.label47.Size = new System.Drawing.Size(14, 15);
             this.label47.TabIndex = 0;
             this.label47.Text = "Z";
             this.label47.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1184,9 +1197,9 @@ namespace SLeighT80
             // 
             this.label48.AutoSize = true;
             this.label48.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label48.Location = new System.Drawing.Point(66, 79);
+            this.label48.Location = new System.Drawing.Point(71, 85);
             this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(14, 13);
+            this.label48.Size = new System.Drawing.Size(14, 30);
             this.label48.TabIndex = 0;
             this.label48.Text = "0";
             this.label48.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1195,9 +1208,9 @@ namespace SLeighT80
             // 
             this.label49.AutoSize = true;
             this.label49.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label49.Location = new System.Drawing.Point(66, 92);
+            this.label49.Location = new System.Drawing.Point(71, 115);
             this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(14, 13);
+            this.label49.Size = new System.Drawing.Size(14, 30);
             this.label49.TabIndex = 0;
             this.label49.Text = "A";
             this.label49.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1206,9 +1219,9 @@ namespace SLeighT80
             // 
             this.label50.AutoSize = true;
             this.label50.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label50.Location = new System.Drawing.Point(66, 105);
+            this.label50.Location = new System.Drawing.Point(71, 145);
             this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(14, 13);
+            this.label50.Size = new System.Drawing.Size(14, 30);
             this.label50.TabIndex = 0;
             this.label50.Text = "0";
             this.label50.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1217,9 +1230,9 @@ namespace SLeighT80
             // 
             this.label51.AutoSize = true;
             this.label51.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label51.Location = new System.Drawing.Point(66, 118);
+            this.label51.Location = new System.Drawing.Point(71, 175);
             this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(14, 13);
+            this.label51.Size = new System.Drawing.Size(14, 15);
             this.label51.TabIndex = 0;
             this.label51.Text = "P";
             this.label51.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1228,9 +1241,9 @@ namespace SLeighT80
             // 
             this.label52.AutoSize = true;
             this.label52.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label52.Location = new System.Drawing.Point(66, 131);
+            this.label52.Location = new System.Drawing.Point(71, 190);
             this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(14, 13);
+            this.label52.Size = new System.Drawing.Size(14, 30);
             this.label52.TabIndex = 0;
             this.label52.Text = "1";
             this.label52.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1239,9 +1252,9 @@ namespace SLeighT80
             // 
             this.label53.AutoSize = true;
             this.label53.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label53.Location = new System.Drawing.Point(66, 144);
+            this.label53.Location = new System.Drawing.Point(71, 220);
             this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(14, 13);
+            this.label53.Size = new System.Drawing.Size(14, 15);
             this.label53.TabIndex = 0;
             this.label53.Text = "C";
             this.label53.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1251,9 +1264,9 @@ namespace SLeighT80
             this.label38.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.label38, 6);
             this.label38.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label38.Location = new System.Drawing.Point(106, 53);
+            this.label38.Location = new System.Drawing.Point(111, 55);
             this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(114, 13);
+            this.label38.Size = new System.Drawing.Size(114, 15);
             this.label38.TabIndex = 0;
             this.label38.Text = "Sign Flag";
             this.label38.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1263,9 +1276,9 @@ namespace SLeighT80
             this.label55.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.label55, 6);
             this.label55.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label55.Location = new System.Drawing.Point(106, 79);
+            this.label55.Location = new System.Drawing.Point(111, 85);
             this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(114, 13);
+            this.label55.Size = new System.Drawing.Size(114, 30);
             this.label55.TabIndex = 0;
             this.label55.Text = "Not used, always zero";
             this.label55.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1275,9 +1288,9 @@ namespace SLeighT80
             this.label54.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.label54, 6);
             this.label54.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label54.Location = new System.Drawing.Point(106, 66);
+            this.label54.Location = new System.Drawing.Point(111, 70);
             this.label54.Name = "label54";
-            this.label54.Size = new System.Drawing.Size(114, 13);
+            this.label54.Size = new System.Drawing.Size(114, 15);
             this.label54.TabIndex = 0;
             this.label54.Text = "Zero Flag";
             this.label54.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1287,9 +1300,9 @@ namespace SLeighT80
             this.label56.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.label56, 7);
             this.label56.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label56.Location = new System.Drawing.Point(106, 92);
+            this.label56.Location = new System.Drawing.Point(111, 115);
             this.label56.Name = "label56";
-            this.label56.Size = new System.Drawing.Size(134, 13);
+            this.label56.Size = new System.Drawing.Size(134, 30);
             this.label56.TabIndex = 0;
             this.label56.Text = "Auxiliary Carry or Half Flag";
             this.label56.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1299,9 +1312,9 @@ namespace SLeighT80
             this.label57.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.label57, 6);
             this.label57.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label57.Location = new System.Drawing.Point(106, 105);
+            this.label57.Location = new System.Drawing.Point(111, 145);
             this.label57.Name = "label57";
-            this.label57.Size = new System.Drawing.Size(114, 13);
+            this.label57.Size = new System.Drawing.Size(114, 30);
             this.label57.TabIndex = 0;
             this.label57.Text = "Not used, always zero";
             this.label57.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1311,9 +1324,9 @@ namespace SLeighT80
             this.label58.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.label58, 6);
             this.label58.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label58.Location = new System.Drawing.Point(106, 118);
+            this.label58.Location = new System.Drawing.Point(111, 175);
             this.label58.Name = "label58";
-            this.label58.Size = new System.Drawing.Size(114, 13);
+            this.label58.Size = new System.Drawing.Size(114, 15);
             this.label58.TabIndex = 0;
             this.label58.Text = "Parity Flag";
             this.label58.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1323,9 +1336,9 @@ namespace SLeighT80
             this.label59.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.label59, 6);
             this.label59.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label59.Location = new System.Drawing.Point(106, 131);
+            this.label59.Location = new System.Drawing.Point(111, 190);
             this.label59.Name = "label59";
-            this.label59.Size = new System.Drawing.Size(114, 13);
+            this.label59.Size = new System.Drawing.Size(114, 30);
             this.label59.TabIndex = 0;
             this.label59.Text = "Not used, always one";
             this.label59.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1335,9 +1348,9 @@ namespace SLeighT80
             this.label60.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.label60, 6);
             this.label60.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label60.Location = new System.Drawing.Point(106, 144);
+            this.label60.Location = new System.Drawing.Point(111, 220);
             this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(114, 13);
+            this.label60.Size = new System.Drawing.Size(114, 15);
             this.label60.TabIndex = 0;
             this.label60.Text = "Carry Flag";
             this.label60.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1348,7 +1361,7 @@ namespace SLeighT80
             this.tableLayoutPanel4.SetColumnSpan(this.label19, 7);
             this.label19.Location = new System.Drawing.Point(3, 0);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(47, 13);
+            this.label19.Size = new System.Drawing.Size(51, 15);
             this.label19.TabIndex = 0;
             this.label19.Text = "F (Flags)";
             // 
@@ -1356,9 +1369,9 @@ namespace SLeighT80
             // 
             this.label62.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.label62, 6);
-            this.label62.Location = new System.Drawing.Point(3, 177);
+            this.label62.Location = new System.Drawing.Point(3, 255);
             this.label62.Name = "label62";
-            this.label62.Size = new System.Drawing.Size(31, 13);
+            this.label62.Size = new System.Drawing.Size(34, 15);
             this.label62.TabIndex = 0;
             this.label62.Text = "Ports";
             // 
@@ -1367,9 +1380,9 @@ namespace SLeighT80
             this.label64.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.label64, 3);
             this.label64.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label64.Location = new System.Drawing.Point(66, 190);
+            this.label64.Location = new System.Drawing.Point(71, 270);
             this.label64.Name = "label64";
-            this.label64.Size = new System.Drawing.Size(54, 26);
+            this.label64.Size = new System.Drawing.Size(54, 30);
             this.label64.TabIndex = 0;
             this.label64.Text = "Port1 In";
             this.label64.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1379,9 +1392,9 @@ namespace SLeighT80
             this.label65.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.label65, 3);
             this.label65.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label65.Location = new System.Drawing.Point(66, 216);
+            this.label65.Location = new System.Drawing.Point(71, 300);
             this.label65.Name = "label65";
-            this.label65.Size = new System.Drawing.Size(54, 26);
+            this.label65.Size = new System.Drawing.Size(54, 30);
             this.label65.TabIndex = 0;
             this.label65.Text = "Port2 In";
             this.label65.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1391,9 +1404,9 @@ namespace SLeighT80
             this.label66.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.label66, 3);
             this.label66.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label66.Location = new System.Drawing.Point(66, 242);
+            this.label66.Location = new System.Drawing.Point(71, 330);
             this.label66.Name = "label66";
-            this.label66.Size = new System.Drawing.Size(54, 164);
+            this.label66.Size = new System.Drawing.Size(54, 82);
             this.label66.TabIndex = 0;
             this.label66.Text = "Port3 In";
             this.label66.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1401,7 +1414,7 @@ namespace SLeighT80
             // txt_Port_2_In
             // 
             this.tableLayoutPanel4.SetColumnSpan(this.txt_Port_2_In, 2);
-            this.txt_Port_2_In.Location = new System.Drawing.Point(126, 219);
+            this.txt_Port_2_In.Location = new System.Drawing.Point(131, 303);
             this.txt_Port_2_In.Name = "txt_Port_2_In";
             this.txt_Port_2_In.Size = new System.Drawing.Size(34, 23);
             this.txt_Port_2_In.TabIndex = 1;
@@ -1410,7 +1423,7 @@ namespace SLeighT80
             // 
             this.tableLayoutPanel4.SetColumnSpan(this.txt_Port_3_In, 2);
             this.txt_Port_3_In.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_Port_3_In.Location = new System.Drawing.Point(126, 245);
+            this.txt_Port_3_In.Location = new System.Drawing.Point(131, 333);
             this.txt_Port_3_In.Name = "txt_Port_3_In";
             this.txt_Port_3_In.Size = new System.Drawing.Size(34, 23);
             this.txt_Port_3_In.TabIndex = 1;
@@ -1420,9 +1433,9 @@ namespace SLeighT80
             this.label67.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.label67, 3);
             this.label67.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label67.Location = new System.Drawing.Point(166, 190);
+            this.label67.Location = new System.Drawing.Point(171, 270);
             this.label67.Name = "label67";
-            this.label67.Size = new System.Drawing.Size(54, 26);
+            this.label67.Size = new System.Drawing.Size(54, 30);
             this.label67.TabIndex = 0;
             this.label67.Text = "Port1 Out";
             this.label67.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1431,7 +1444,7 @@ namespace SLeighT80
             // 
             this.tableLayoutPanel4.SetColumnSpan(this.txt_Port_1_Out, 2);
             this.txt_Port_1_Out.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_Port_1_Out.Location = new System.Drawing.Point(226, 193);
+            this.txt_Port_1_Out.Location = new System.Drawing.Point(231, 273);
             this.txt_Port_1_Out.Name = "txt_Port_1_Out";
             this.txt_Port_1_Out.Size = new System.Drawing.Size(34, 23);
             this.txt_Port_1_Out.TabIndex = 1;
@@ -1440,7 +1453,7 @@ namespace SLeighT80
             // 
             this.tableLayoutPanel4.SetColumnSpan(this.txt_Port_3_Out, 2);
             this.txt_Port_3_Out.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_Port_3_Out.Location = new System.Drawing.Point(226, 219);
+            this.txt_Port_3_Out.Location = new System.Drawing.Point(231, 303);
             this.txt_Port_3_Out.Name = "txt_Port_3_Out";
             this.txt_Port_3_Out.Size = new System.Drawing.Size(34, 23);
             this.txt_Port_3_Out.TabIndex = 1;
@@ -1449,7 +1462,7 @@ namespace SLeighT80
             // 
             this.tableLayoutPanel4.SetColumnSpan(this.txt_Port_5_Out, 2);
             this.txt_Port_5_Out.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_Port_5_Out.Location = new System.Drawing.Point(226, 245);
+            this.txt_Port_5_Out.Location = new System.Drawing.Point(231, 333);
             this.txt_Port_5_Out.Name = "txt_Port_5_Out";
             this.txt_Port_5_Out.Size = new System.Drawing.Size(34, 23);
             this.txt_Port_5_Out.TabIndex = 1;
@@ -1459,9 +1472,9 @@ namespace SLeighT80
             this.label68.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.label68, 3);
             this.label68.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label68.Location = new System.Drawing.Point(166, 216);
+            this.label68.Location = new System.Drawing.Point(171, 300);
             this.label68.Name = "label68";
-            this.label68.Size = new System.Drawing.Size(54, 26);
+            this.label68.Size = new System.Drawing.Size(54, 30);
             this.label68.TabIndex = 0;
             this.label68.Text = "Port3 Out";
             this.label68.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1471,9 +1484,9 @@ namespace SLeighT80
             this.label69.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.label69, 3);
             this.label69.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label69.Location = new System.Drawing.Point(166, 242);
+            this.label69.Location = new System.Drawing.Point(171, 330);
             this.label69.Name = "label69";
-            this.label69.Size = new System.Drawing.Size(54, 164);
+            this.label69.Size = new System.Drawing.Size(54, 82);
             this.label69.TabIndex = 0;
             this.label69.Text = "Port5 Out";
             this.label69.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1481,9 +1494,9 @@ namespace SLeighT80
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.tableLayoutPanel6);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(642, 688);
+            this.tabPage3.Size = new System.Drawing.Size(660, 697);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Assembler";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -1500,16 +1513,16 @@ namespace SLeighT80
             this.tableLayoutPanel6.RowCount = 2;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(642, 688);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(660, 697);
             this.tableLayoutPanel6.TabIndex = 0;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.textBox3);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(3, 553);
+            this.groupBox1.Location = new System.Drawing.Point(3, 560);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(636, 132);
+            this.groupBox1.Size = new System.Drawing.Size(654, 134);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Output";
@@ -1520,7 +1533,7 @@ namespace SLeighT80
             this.textBox3.Location = new System.Drawing.Point(3, 19);
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(630, 110);
+            this.textBox3.Size = new System.Drawing.Size(648, 112);
             this.textBox3.TabIndex = 0;
             // 
             // groupBox2
@@ -1529,7 +1542,7 @@ namespace SLeighT80
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(3, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(636, 544);
+            this.groupBox2.Size = new System.Drawing.Size(654, 551);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Assembly Code";
@@ -1537,18 +1550,19 @@ namespace SLeighT80
             // txt_Assembly_Code
             // 
             this.txt_Assembly_Code.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txt_Assembly_Code.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txt_Assembly_Code.Location = new System.Drawing.Point(3, 19);
             this.txt_Assembly_Code.Multiline = true;
             this.txt_Assembly_Code.Name = "txt_Assembly_Code";
-            this.txt_Assembly_Code.Size = new System.Drawing.Size(630, 522);
+            this.txt_Assembly_Code.Size = new System.Drawing.Size(648, 529);
             this.txt_Assembly_Code.TabIndex = 0;
             // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.textBox1);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Location = new System.Drawing.Point(4, 24);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(642, 688);
+            this.tabPage4.Size = new System.Drawing.Size(660, 697);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Disassembly";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -1556,19 +1570,20 @@ namespace SLeighT80
             // textBox1
             // 
             this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox1.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.textBox1.Location = new System.Drawing.Point(0, 0);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(642, 688);
+            this.textBox1.Size = new System.Drawing.Size(660, 697);
             this.textBox1.TabIndex = 0;
             // 
             // tabPage1
             // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(642, 688);
+            this.tabPage1.Size = new System.Drawing.Size(660, 697);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Memory";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -1576,9 +1591,9 @@ namespace SLeighT80
             // tabPage6
             // 
             this.tabPage6.Controls.Add(this.txt_Console);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Location = new System.Drawing.Point(4, 24);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(642, 688);
+            this.tabPage6.Size = new System.Drawing.Size(660, 697);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "Console";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -1592,7 +1607,7 @@ namespace SLeighT80
             this.txt_Console.Location = new System.Drawing.Point(0, 0);
             this.txt_Console.Multiline = true;
             this.txt_Console.Name = "txt_Console";
-            this.txt_Console.Size = new System.Drawing.Size(642, 688);
+            this.txt_Console.Size = new System.Drawing.Size(660, 697);
             this.txt_Console.TabIndex = 0;
             // 
             // tableLayoutPanel7
@@ -1622,7 +1637,7 @@ namespace SLeighT80
             // 
             // btn_Next
             // 
-            this.btn_Next.Location = new System.Drawing.Point(578, 723);
+            this.btn_Next.Location = new System.Drawing.Point(596, 734);
             this.btn_Next.Name = "btn_Next";
             this.btn_Next.Size = new System.Drawing.Size(75, 23);
             this.btn_Next.TabIndex = 3;
@@ -1632,7 +1647,7 @@ namespace SLeighT80
             // 
             // btn_Next_N
             // 
-            this.btn_Next_N.Location = new System.Drawing.Point(497, 723);
+            this.btn_Next_N.Location = new System.Drawing.Point(515, 734);
             this.btn_Next_N.Name = "btn_Next_N";
             this.btn_Next_N.Size = new System.Drawing.Size(75, 23);
             this.btn_Next_N.TabIndex = 3;
@@ -1642,7 +1657,7 @@ namespace SLeighT80
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(3, 723);
+            this.button3.Location = new System.Drawing.Point(3, 734);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 5;
@@ -1652,7 +1667,7 @@ namespace SLeighT80
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(84, 723);
+            this.button4.Location = new System.Drawing.Point(84, 734);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 6;
@@ -1663,9 +1678,9 @@ namespace SLeighT80
             // txt_Steps
             // 
             this.txt_Steps.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_Steps.Location = new System.Drawing.Point(213, 723);
+            this.txt_Steps.Location = new System.Drawing.Point(213, 734);
             this.txt_Steps.Name = "txt_Steps";
-            this.txt_Steps.Size = new System.Drawing.Size(278, 23);
+            this.txt_Steps.Size = new System.Drawing.Size(296, 23);
             this.txt_Steps.TabIndex = 4;
             this.txt_Steps.Text = "5000000000";
             // 
@@ -1691,6 +1706,7 @@ namespace SLeighT80
             this.Text = "Intel 8080 Emulator";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -1852,6 +1868,7 @@ namespace SLeighT80
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
+        private ToolStripMenuItem saveASMFileToolStripMenuItem;
     }
 }
 

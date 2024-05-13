@@ -12,12 +12,14 @@ namespace SLeighT80.Processors
         /// <param name="fileName"></param>
         /// <param name="code"></param>
         /// <param name="instructionOpCodes"></param>
-        public static void Assemble(string fileName, string code, Dictionary<string, Instruction> instructionOpCodes)
+        public static string Assemble(string fileName, string code, Dictionary<string, Instruction> instructionOpCodes)
         {
+            string result = "Assembled successfully";
+
             Stream stream = null;
             try
             {
-                stream = new FileStream("file.txt", FileMode.OpenOrCreate);
+                stream = new FileStream(fileName, FileMode.OpenOrCreate);
                 using (BinaryWriter writer = new BinaryWriter(stream))
                 {
                     stream = null;
@@ -60,6 +62,10 @@ namespace SLeighT80.Processors
                                     writer.Write(b2);
                                 }
                             }
+                            else
+                            {
+                                result = "This line is fucked! " + line;
+                            }
                         }
                     }
                 }
@@ -68,6 +74,7 @@ namespace SLeighT80.Processors
             {
                 stream?.Dispose();
             }
+            return result;
         }
     }
 }

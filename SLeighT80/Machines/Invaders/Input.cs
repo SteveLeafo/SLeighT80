@@ -38,6 +38,8 @@ namespace SLeighT80.Machines.Invaders
                 CheckXInputSticks(machine, state);
             }
         }
+        
+        const byte PORT_IN_1 = 0;
 
         /// <summary>
         /// Checks the controllers buttons, Inputs set by a controller will be cleared if they are no longer active
@@ -50,14 +52,14 @@ namespace SLeighT80.Machines.Invaders
         {
             if ((state.Gamepad.Buttons & flag) != 0)
             {
-                machine.PORT_IN_1 |= portByte;
+                machine.Ports[PORT_IN_1] |= portByte;
                 m_controllerState |= (ushort)flag;
             }
             else
             {
                 if ((m_controllerState & (ushort)flag) != 0)
                 {
-                    machine.PORT_IN_1 = unchecked((byte)(machine.PORT_IN_1 & (byte)~portByte));
+                    machine.Ports[PORT_IN_1] = unchecked((byte)(machine.Ports[PORT_IN_1] & (byte)~portByte));
                     m_controllerState = unchecked((ushort)(m_controllerState & (ushort)~flag));
                 }
             }
@@ -72,44 +74,44 @@ namespace SLeighT80.Machines.Invaders
         {
             if (state.Gamepad.LeftThumbX > Gamepad.LeftThumbDeadZone)
             {
-                machine.PORT_IN_1 |= 0x40;
+                machine.Ports[PORT_IN_1] |= 0x40;
                 m_stickRight = true;
             }
             else if (state.Gamepad.LeftThumbX < -Gamepad.LeftThumbDeadZone)
             {
-                machine.PORT_IN_1 |= 0x20;
+                machine.Ports[PORT_IN_1] |= 0x20;
                 m_stickLeft = true;
             }
             else if (state.Gamepad.LeftThumbY < -Gamepad.LeftThumbDeadZone)
             {
-                machine.PORT_IN_1 |= 0x08;
+                machine.Ports[PORT_IN_1] |= 0x08;
                 m_stickDown = true;
             }
             else if (state.Gamepad.LeftThumbY > Gamepad.LeftThumbDeadZone)
             {
-                machine.PORT_IN_1 |= 0x80;
+                machine.Ports[PORT_IN_1] |= 0x80;
                 m_stickUp = true;
             }
             else
             {
                 if (m_stickRight)
                 {
-                    machine.PORT_IN_1 = unchecked((byte)(machine.PORT_IN_1 & (byte)~0x40));
+                    machine.Ports[PORT_IN_1] = unchecked((byte)(machine.Ports[PORT_IN_1] & (byte)~0x40));
                     m_stickRight = false;
                 }
                 else if (m_stickLeft)
                 {
-                    machine.PORT_IN_1 = unchecked((byte)(machine.PORT_IN_1 & (byte)~0x20));
+                    machine.Ports[PORT_IN_1] = unchecked((byte)(machine.Ports[PORT_IN_1] & (byte)~0x20));
                     m_stickLeft = false;
                 }
                 else if (m_stickUp)
                 {
-                    machine.PORT_IN_1 = unchecked((byte)(machine.PORT_IN_1 & (byte)~0x80));
+                    machine.Ports[PORT_IN_1] = unchecked((byte)(machine.Ports[PORT_IN_1] & (byte)~0x80));
                     m_stickUp = false;
                 }
                 else if (m_stickDown)
                 {
-                    machine.PORT_IN_1 = unchecked((byte)(machine.PORT_IN_1 & (byte)~0x08));
+                    machine.Ports[PORT_IN_1] = unchecked((byte)(machine.Ports[PORT_IN_1] & (byte)~0x08));
                     m_stickDown = false;
                 }
             }

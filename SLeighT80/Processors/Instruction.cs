@@ -14,7 +14,7 @@ namespace SLeighT80.Processors
         /// <param name="cycles"></param>
         /// <param name="altCycles"></param>
         /// <param name="executionMethod">TODO - Use the base class</param>
-        public Instruction(string mnemonic, byte opCode, byte length, byte cycles, byte altCycles, Action<i8080.i8080, byte, byte> executionMethod = null)
+        public Instruction(string mnemonic, byte opCode, byte length, byte cycles, byte[] altCycles, Action<byte, byte> executionMethod = null)
         {
             Mnemonic = mnemonic;
             OpCode = opCode;
@@ -30,9 +30,9 @@ namespace SLeighT80.Processors
         /// <param name="machine"></param>
         /// <param name="b1"></param>
         /// <param name="b2"></param>
-        public void Execute(i8080.i8080 machine, byte b1, byte b2)
+        public void Execute(byte b1, byte b2)
         {
-            ExecutionMethod?.Invoke(machine, b1, b2);
+            ExecutionMethod?.Invoke(b1, b2);
         }
 
         // A text based name for the instruction
@@ -48,9 +48,9 @@ namespace SLeighT80.Processors
         public int Cycles;
 
         // An alternate number of cycles
-        public int AltCycles;
+        public byte[] AltCycles;
 
         // The method to call when the instruction needs to be executed
-        internal Action<i8080.i8080, byte, byte> ExecutionMethod;
+        internal Action<byte, byte> ExecutionMethod;
     }
 }

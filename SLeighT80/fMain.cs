@@ -12,6 +12,7 @@ using SLeighT80.Processors;
 using System.Collections.Generic;
 using System.IO.Compression;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace SLeighT80
 {
@@ -41,7 +42,7 @@ namespace SLeighT80
             KeyPreview = true;
 
             // Install the 8080 instruction set to this machine
-            i8080InstructionSet.Install(m_machine);
+            new i8080InstructionSet().InstallTo(m_machine);
             m_machine.Optimize();
 
             // Initialize XInput
@@ -226,36 +227,47 @@ namespace SLeighT80
             }
         }
 
+        // Ports
+        byte PORT_IN_1 = 0;
+        byte PORT_IN_2 = 1;
+
+        byte PORT_OUT_3 = 2;
+        byte PORT_OUT_5 = 3;
+
+        byte SHIFT_LSB = 4;
+        byte SHIFT_MSB = 5;
+        byte SHIFT_OFFSET = 6;
+
         /// <summary>
         /// 
         /// </summary>
         private void RefreshDebugInformation()
         {
-            txt_Register_A.Text = m_machine.A.ToString("x2");
-            txt_Register_B.Text = m_machine.B.ToString("x2");
-            txt_Register_C.Text = m_machine.C.ToString("x2");
-            txt_Register_D.Text = m_machine.D.ToString("x2");
-            txt_Register_E.Text = m_machine.E.ToString("x2");
-            txt_Register_F.Text = m_machine.F.ToString("x2");
-            txt_Register_H.Text = m_machine.H.ToString("x2");
-            txt_Register_L.Text = m_machine.L.ToString("x2");
+            txt_Register_A.Text = m_machine.Registers[0].ToString("x2");
+            txt_Register_B.Text = m_machine.Registers[1].ToString("x2");
+            txt_Register_C.Text = m_machine.Registers[2].ToString("x2");
+            txt_Register_D.Text = m_machine.Registers[3].ToString("x2");
+            txt_Register_E.Text = m_machine.Registers[4].ToString("x2");
+            txt_Register_F.Text = m_machine.Registers[5].ToString("x2");
+            txt_Register_H.Text = m_machine.Registers[6].ToString("x2");
+            txt_Register_L.Text = m_machine.Registers[7].ToString("x2");
 
             txt_Pointer_IP.Text = m_machine.PC.ToString("x2");
             txt_Pointer_SP.Text = m_machine.SP.ToString("x2");
 
-            txt_Port_1_In.Text = m_machine.PORT_IN_1.ToString("x2");
-            txt_Port_2_In.Text = m_machine.PORT_IN_2.ToString("x2");
+            txt_Port_1_In.Text = m_machine.Ports[PORT_IN_1].ToString("x2");
+            txt_Port_2_In.Text = m_machine.Ports[PORT_IN_2].ToString("x2");
             //txt_Port_3_In.Text = machine.PC.ToString("x2");
             //txt_Port_1_Out.Text = machine.PORT_OUT_1.ToString("x2");
-            txt_Port_3_Out.Text = m_machine.PORT_OUT_3.ToString("x2");
-            txt_Port_5_Out.Text = m_machine.PORT_OUT_5.ToString("x2");
+            txt_Port_3_Out.Text = m_machine.Ports[PORT_OUT_3].ToString("x2");
+            txt_Port_5_Out.Text = m_machine.Ports[PORT_OUT_5].ToString("x2");
 
 
-            checkBox1.Checked = (m_machine.F & (byte)i8080.Flags.S) != 0;
-            checkBox2.Checked = (m_machine.F & (byte)i8080.Flags.Z) != 0;
-            checkBox6.Checked = (m_machine.F & (byte)i8080.Flags.P) != 0;
-            checkBox7.Checked = (m_machine.F & 2) != 0;
-            checkBox8.Checked = (m_machine.F & (byte)i8080.Flags.C) != 0;
+            //checkBox1.Checked = (m_machine.F & (byte)i8080.Flags.S) != 0;
+            //checkBox2.Checked = (m_machine.F & (byte)i8080.Flags.Z) != 0;
+            //checkBox6.Checked = (m_machine.F & (byte)i8080.Flags.P) != 0;
+            //checkBox7.Checked = (m_machine.F & 2) != 0;
+            //checkBox8.Checked = (m_machine.F & (byte)i8080.Flags.C) != 0;
 
             //m_byteViewer.SetBytes(m_machine.RAM);
 
@@ -285,7 +297,9 @@ namespace SLeighT80
         /// <param name="e"></param>
         private void assembleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Assembler.Assemble("C:\\Games\\8080\\a.out", txt_Assembly_Code.Text, m_machine.InstructionOpCodes);
+            Directory.CreateDirectory("C:\\Games");
+            Directory.CreateDirectory("C:\\Games\\8080");
+            textBox3.Text = Assembler.Assemble("C:\\Games\\8080\\a.out", txt_Assembly_Code.Text, m_machine.InstructionOpCodes);
         }
 
         /// <summary>
@@ -338,7 +352,8 @@ namespace SLeighT80
         {
             m_machine.Reset(0);
 
-            File.ReadAllBytes(m_filename).CopyTo(m_machine.RAM, 0x100);
+            //File.ReadAllBytes(m_filename).CopyTo(m_machine.RAM, 0x100);
+            m_machine.PC = 0x100;
 
             textBox1.Text = Disassembler.Disassemble(m_machine.RAM, m_machine.InstructionSet);
             txt_CompletedInstructions.Text = "";
@@ -457,50 +472,50 @@ namespace SLeighT80
             }
             else if (e.KeyData == Keys.C)
             {
-                m_machine.PORT_IN_1 |= 0x01;
+                m_machine.Ports[PORT_IN_1] |= 0x01;
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.D1)
             {
-                m_machine.PORT_IN_1 |= 0x04;  // 1P
+                m_machine.Ports[PORT_IN_1] |= 0x04;  // 1P
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.D2)
             {
-                m_machine.PORT_IN_1 |= 0x02;  // 1P
+                m_machine.Ports[PORT_IN_1] |= 0x02;  // 1P
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.Left)
             {
-                m_machine.PORT_IN_1 |= 0x20;
+                m_machine.Ports[PORT_IN_1] |= 0x20;
                 // Can't move left and right at the same time 
-                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x40));
+                m_machine.Ports[PORT_IN_1] = unchecked((byte)(m_machine.Ports[PORT_IN_1] & (byte)~0x40));
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.Up)
             {
-                m_machine.PORT_IN_1 |= 0x80;
+                m_machine.Ports[PORT_IN_1] |= 0x80;
                 // Can't move left and right at the same time 
-                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x08));
+                m_machine.Ports[PORT_IN_1] = unchecked((byte)(m_machine.Ports[PORT_IN_1] & (byte)~0x08));
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.Down)
             {
-                m_machine.PORT_IN_1 |= 0x08;
+                m_machine.Ports[PORT_IN_1] |= 0x08;
                 // Can't move left and right at the same time 
-                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x80));
+                m_machine.Ports[PORT_IN_1] = unchecked((byte)(m_machine.Ports[PORT_IN_1] & (byte)~0x80));
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.Right)
             {
-                m_machine.PORT_IN_1 |= 0x40;
+                m_machine.Ports[PORT_IN_1] |= 0x40;
                 // Can't move left and right at the same time 
-                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x20));
+                m_machine.Ports[PORT_IN_1] = unchecked((byte)(m_machine.Ports[PORT_IN_1] & (byte)~0x20));
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.Space)
             {
-                m_machine.PORT_IN_1 |= 0x10;
+                m_machine.Ports[PORT_IN_1] |= 0x10;
                 e.Handled = true;
             }
         }
@@ -513,42 +528,42 @@ namespace SLeighT80
         {
             if (e.KeyData == Keys.C)
             {
-                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x01));
+                m_machine.Ports[PORT_IN_1] = unchecked((byte)(m_machine.Ports[PORT_IN_1] & (byte)~0x01));
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.D1)
             {
-                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x04));
+                m_machine.Ports[PORT_IN_1] = unchecked((byte)(m_machine.Ports[PORT_IN_1] & (byte)~0x04));
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.D2)
             {
-                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x02));
+                m_machine.Ports[PORT_IN_1] = unchecked((byte)(m_machine.Ports[PORT_IN_1] & (byte)~0x02));
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.Left)
             {
-                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x20));
+                m_machine.Ports[PORT_IN_1] = unchecked((byte)(m_machine.Ports[PORT_IN_1] & (byte)~0x20));
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.Right)
             {
-                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x40));
+                m_machine.Ports[PORT_IN_1] = unchecked((byte)(m_machine.Ports[PORT_IN_1] & (byte)~0x40));
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.Up)
             {
-                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x80));
+                m_machine.Ports[PORT_IN_1] = unchecked((byte)(m_machine.Ports[PORT_IN_1] & (byte)~0x80));
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.Down)
             {
-                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x08));
+                m_machine.Ports[PORT_IN_1] = unchecked((byte)(m_machine.Ports[PORT_IN_1] & (byte)~0x08));
                 e.Handled = true;
             }
             else if (e.KeyData == Keys.Space)
             {
-                m_machine.PORT_IN_1 = unchecked((byte)(m_machine.PORT_IN_1 & (byte)~0x10));
+                m_machine.Ports[PORT_IN_1] = unchecked((byte)(m_machine.Ports[PORT_IN_1] & (byte)~0x10));
                 e.Handled = true;
             }
 
@@ -724,6 +739,56 @@ namespace SLeighT80
             using (fAbout aboutBox = new fAbout())
             {
                 aboutBox.ShowDialog(this);
+            }
+        }
+
+        private void loadAoutFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            File.ReadAllBytes("C:\\Games\\8080\\a.out").CopyTo(m_machine.RAM, 0x100);
+            m_machine.PC = 0x100;
+
+            tabControl1.SelectedIndex = 0;
+            txt_Console.Text += "\r\n";
+
+            textBox1.Text = Disassembler.Disassemble(m_machine.RAM, m_machine.InstructionSet);
+
+            RefreshDebugInformation();
+        }
+
+        private void saveASMFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.Title = "Browse 8080 ASM Files";
+                saveFileDialog.DefaultExt = "asm";
+                saveFileDialog.InitialDirectory = "C:\\Games\\8080\\ASM";
+                saveFileDialog.Filter = "8080 ASM Files (*.asm)|*.asm";
+                saveFileDialog.FilterIndex = 0;
+                saveFileDialog.RestoreDirectory = true;
+
+                if (saveFileDialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+                {
+                    File.WriteAllText(saveFileDialog.FileName, txt_Assembly_Code.Text);
+                }
+            }
+        }
+
+        private void openASMFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Title = "Browse 8080 ASM Files";
+                openFileDialog.DefaultExt = "asm";
+                openFileDialog.InitialDirectory = "C:\\Games\\8080\\ASM";
+                openFileDialog.Filter = "8080 ASM Files (*.asm)|*.asm";
+                openFileDialog.FilterIndex = 0;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+                {
+                    this.txt_Assembly_Code.Text = File.ReadAllText(openFileDialog.FileName);
+                    tabControl1.SelectedIndex = 1;
+                }
             }
         }
     }

@@ -4,32 +4,31 @@ using System.Runtime.CompilerServices;
 
 namespace SLeighT80.Processors.i8080
 {
-    public class i8080 : Processor
+    public class AVR : Processor
     {
         // Stack pointer
         internal ushort SP;
 
         // Registers
-        const byte A = 0;
-        const byte B = 1;
-        const byte C = 2;
-        const byte D = 3;
-        const byte E = 4;
-        const byte F = 5;
-        const byte H = 6;
-        const byte L = 7;
+        internal byte A;
+        internal byte F;
+        internal byte B;
+        internal byte C;
+        internal byte D;
+        internal byte E;
+        internal byte H;
+        internal byte L;
 
         // Ports
-        byte PORT_IN_1 = 0;
-        byte PORT_IN_2 = 1;
+        internal byte PORT_IN_1;
+        internal byte PORT_IN_2;
 
-        byte PORT_OUT_3 = 2;
-        byte PORT_OUT_5 = 3;
+        internal byte PORT_OUT_3;
+        internal byte PORT_OUT_5;
 
-        byte SHIFT_LSB = 4;
-        byte SHIFT_MSB = 5;
-        byte SHIFT_OFFSET = 6;
-
+        internal byte SHIFT_LSB;
+        internal byte SHIFT_MSB;
+        internal byte SHIFT_OFFSET;
         internal int ScaleFactor = 3;
 
         public enum Flags : byte
@@ -61,7 +60,7 @@ namespace SLeighT80.Processors.i8080
         /// <summary>
         /// Constructor - requires RAM to be usefull
         /// </summary>
-        public i8080(byte[] ram) : base(ram)
+        public AVR(byte[] ram) : base(ram)
         {
             for (int b = 0x00; b <= 0xff; ++b)
             {
@@ -111,7 +110,7 @@ namespace SLeighT80.Processors.i8080
                     b2 = RAM[PC++];
                 }
 
-                instruction.Execute(b1, b2);
+                //instruction.Execute(this, b1, b2);
 
                 Cycles += (UInt64)instruction.Cycles;
             }
@@ -129,7 +128,7 @@ namespace SLeighT80.Processors.i8080
 
             if (PC < RAM.Length - 2)
             {
-                instruction.Execute(RAM[PC + 1], RAM[PC + 2]);
+                //instruction.Execute(this, RAM[PC + 1], RAM[PC + 2]);
                 Codes[instruction.OpCode] = true;
                 Cycles += (UInt64)instruction.Cycles;
             }
@@ -177,14 +176,14 @@ namespace SLeighT80.Processors.i8080
         {
             Array.Clear(RAM, 0, RAM.Length);
 
-            Registers[A] = 0;
-            Registers[F] = 2;
-            Registers[B] = 0;
-            Registers[C] = 0;
-            Registers[D] = 0;
-            Registers[E] = 0;
-            Registers[H] = 0;
-            Registers[L] = 0;
+            A = 0;
+            F = 2;
+            B = 0;
+            C = 0;
+            D = 0;
+            E = 0;
+            H = 0;
+            L = 0;
 
             Cycles = 0;
 
@@ -192,14 +191,14 @@ namespace SLeighT80.Processors.i8080
 
             SP = sp;
 
-            Ports[PORT_IN_1] = 0;
-            Ports[PORT_IN_2] = 0;
-            Ports[PORT_OUT_3] = 0;
-            Ports[PORT_OUT_5] = 0;
+            PORT_IN_1 = 0;
+            PORT_IN_2 = 0;
+            PORT_OUT_3 = 0;
+            PORT_OUT_5 = 0;
 
-            Ports[SHIFT_LSB] = 0;
-            Ports[SHIFT_MSB] = 0;
-            Ports[SHIFT_OFFSET] = 0;
+            SHIFT_LSB = 0;
+            SHIFT_MSB = 0;
+            SHIFT_OFFSET = 0;
 
             InterruptsEnabled = false;
             InterruptOperation = 0;
@@ -420,7 +419,7 @@ namespace SLeighT80.Processors.i8080
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void SetFlag(Flags flag)
         {
-            Registers[F] |= (byte)flag;
+            F |= (byte)flag;
         }
 
         /// <summary>
@@ -430,7 +429,7 @@ namespace SLeighT80.Processors.i8080
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void ClearFlag(Flags flag)
         {
-            Registers[F] &= (byte)~(byte)flag;
+            F &= (byte)~(byte)flag;
         }
     }
 }

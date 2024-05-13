@@ -8,6 +8,15 @@ namespace SLeighT80.Processors
         // Is this thing on?
         internal bool On = false;
 
+        // Random access memory
+        internal byte[] RAM;
+
+        // Registers
+        internal byte[] Registers;
+
+        // Ports
+        internal byte[] Ports;
+
         // Is this thing on?
         internal bool MemoryProtection = false;
 
@@ -38,9 +47,6 @@ namespace SLeighT80.Processors
         internal static bool[] ParityLookUp = new bool[256];
 
         protected static Instruction[] OpCodes;
-
-        // Random access memory
-        internal byte[] RAM;
 
         // Program counter
         internal ushort PC;
