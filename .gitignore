@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/SLeighT80/bin
+/SLeighT80/obj
+/SLeighT80/.dotnet
+/Visual Studio 18/Visualizers
+/SLeighT80/SLeighT80.csproj.user
+/.gitignore
+/.vs/SLeighT80
