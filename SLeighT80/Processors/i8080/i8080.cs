@@ -58,6 +58,8 @@ namespace SLeighT80.Processors.i8080
 
         internal int Frames;
 
+        internal bool Halted;
+
         /// <summary>
         /// Constructor - requires RAM to be usefull
         /// </summary>
@@ -74,6 +76,16 @@ namespace SLeighT80.Processors.i8080
         /// </summary>
         public void RunNext()
         {
+            if (Halted)
+            {
+                if (InterruptPending && InterruptsEnabled && InterruptDelay == 0)
+                {
+                    Halted = false;
+                    ExecuteInterrupt();
+                }
+                return;
+            }
+
             if (InterruptPending && InterruptsEnabled && InterruptDelay == 0)
             {
                 ExecuteInterrupt();
@@ -111,9 +123,16 @@ namespace SLeighT80.Processors.i8080
                     b2 = RAM[PC++];
                 }
 
+                byte flagsBefore = Registers[F];
                 instruction.Execute(b1, b2);
 
-                Cycles += (UInt64)instruction.Cycles;
+                int cycles = instruction.Cycles;
+                if (instruction.AltCycles != null && instruction.AltCycles.Length > 0 && IsConditionalNotTaken(code, flagsBefore))
+                {
+                    cycles = instruction.AltCycles[0];
+                }
+
+                Cycles += (UInt64)cycles;
             }
             NumberOfExecutedInstructions++;
         }
@@ -133,6 +152,46 @@ namespace SLeighT80.Processors.i8080
                 Codes[instruction.OpCode] = true;
                 Cycles += (UInt64)instruction.Cycles;
             }
+        }
+
+        private static bool IsConditionalNotTaken(byte opcode, byte flags)
+        {
+            switch (opcode)
+            {
+                case 0xC0: // RNZ
+                case 0xC4: // CNZ
+                    return (flags & (byte)Flags.Z) != 0;
+
+                case 0xC8: // RZ
+                case 0xCC: // CZ
+                    return (flags & (byte)Flags.Z) == 0;
+
+                case 0xD0: // RNC
+                case 0xD4: // CNC
+                    return (flags & (byte)Flags.C) != 0;
+
+                case 0xD8: // RC
+                case 0xDC: // CC
+                    return (flags & (byte)Flags.C) == 0;
+
+                case 0xE0: // RPO
+                case 0xE4: // CPO
+                    return (flags & (byte)Flags.P) != 0;
+
+                case 0xE8: // RPE
+                case 0xEC: // CPE
+                    return (flags & (byte)Flags.P) == 0;
+
+                case 0xF0: // RP
+                case 0xF4: // CP
+                    return (flags & (byte)Flags.S) != 0;
+
+                case 0xF8: // RM
+                case 0xFC: // CM
+                    return (flags & (byte)Flags.S) == 0;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -206,6 +265,7 @@ namespace SLeighT80.Processors.i8080
 
             NumberOfExecutedInstructions = 0;
 
+            Halted = false;
             On = true;
 
             Console.Clear();
@@ -267,10 +327,11 @@ namespace SLeighT80.Processors.i8080
         /// <returns></returns>
         internal byte And(byte val)
         {
-            byte result = (byte)(A & val);
+            byte a = Registers[A];
+            byte result = (byte)(a & val);
             ClearFlag(Flags.C);
 
-            if ((byte)((A | val) & 0x08) != 0)
+            if ((byte)((a | val) & 0x08) != 0)
             {
                 SetFlag(Flags.A);
             }
@@ -287,7 +348,7 @@ namespace SLeighT80.Processors.i8080
         /// </summary>
         internal void LogicFlags()
         {
-            FlagsZSP(A);
+            FlagsZSP(Registers[A]);
             ClearFlag(Flags.C);
             ClearFlag(Flags.A);
         }
@@ -351,7 +412,7 @@ namespace SLeighT80.Processors.i8080
         internal byte Sub(byte a, byte b, bool carry)
         {
             byte result = Add(a, (byte)~b, !carry);
-            if ((F & (byte)Flags.C) != 0)
+            if ((Registers[F] & (byte)Flags.C) != 0)
             {
                 ClearFlag(Flags.C);
             }
@@ -369,7 +430,8 @@ namespace SLeighT80.Processors.i8080
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void Compare(ushort val)
         {
-            ushort res = (ushort)(A - val);
+            byte a = Registers[A];
+            ushort res = (ushort)(a - val);
 
             if ((res >> 8) != 0)
             {
@@ -380,7 +442,7 @@ namespace SLeighT80.Processors.i8080
                 ClearFlag(Flags.C);
             }
 
-            if ((~(A ^ res ^ val) & 0x10) != 0)
+            if ((~(a ^ res ^ val) & 0x10) != 0)
             {
                 SetFlag(Flags.A);
             }

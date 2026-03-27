@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SLeighT80", "SLeighT80.csproj", "{1658025A-1E92-EAE7-DAB6-5F10AF0714FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1658025A-1E92-EAE7-DAB6-5F10AF0714FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1658025A-1E92-EAE7-DAB6-5F10AF0714FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1658025A-1E92-EAE7-DAB6-5F10AF0714FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1658025A-1E92-EAE7-DAB6-5F10AF0714FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {90FF18A7-98E7-425F-A063-5B92129C60AD}
+	EndGlobalSection
+EndGlobal

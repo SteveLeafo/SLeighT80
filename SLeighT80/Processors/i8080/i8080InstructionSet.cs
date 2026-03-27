@@ -217,67 +217,67 @@ namespace SLeighT80.Processors.i8080
             machine.AddInstruction(new Instruction("CMP L", 0xbd, 1, 4, new byte[0], CMP_L));
             machine.AddInstruction(new Instruction("CMP M", 0xbe, 1, 7, new byte[0], CMP_M));
             machine.AddInstruction(new Instruction("CMP A", 0xbf, 1, 4, new byte[0], CMP_A));
-            machine.AddInstruction(new Instruction("RNZ", 0xc0, 1, 11, new byte[5], RNZ));
+            machine.AddInstruction(new Instruction("RNZ", 0xc0, 1, 11, new byte[] { 5 }, RNZ));
             machine.AddInstruction(new Instruction("POP B", 0xc1, 1, 10, new byte[0], POP_B));
             machine.AddInstruction(new Instruction("JNZ", 0xc2, 3, 10, new byte[0], JNZ));
             machine.AddInstruction(new Instruction("JMP", 0xc3, 3, 10, new byte[0], JMP));
-            machine.AddInstruction(new Instruction("CNZ", 0xc4, 3, 17, new byte[11], CNZ));
+            machine.AddInstruction(new Instruction("CNZ", 0xc4, 3, 17, new byte[] { 11 }, CNZ));
             machine.AddInstruction(new Instruction("PUSH B", 0xc5, 1, 11, new byte[0], PUSH_B));
             machine.AddInstruction(new Instruction("ADI", 0xc6, 2, 7, new byte[0], ADI));
             machine.AddInstruction(new Instruction("RST 0", 0xc7, 1, 11, new byte[0], RST_0));
-            machine.AddInstruction(new Instruction("RZ", 0xc8, 1, 11, new byte[5], RZ));
+            machine.AddInstruction(new Instruction("RZ", 0xc8, 1, 11, new byte[] { 5 }, RZ));
             machine.AddInstruction(new Instruction("RET", 0xc9, 1, 10, new byte[0], RET));
             machine.AddInstruction(new Instruction("JZ", 0xca, 3, 10, new byte[0], JZ));
             machine.AddInstruction(new Instruction("*JMP", 0xcb, 3, 10, new byte[0], JMP));
-            machine.AddInstruction(new Instruction("CZ", 0xcc, 3, 17, new byte[11], CZ));
+            machine.AddInstruction(new Instruction("CZ", 0xcc, 3, 17, new byte[] { 11 }, CZ));
             machine.AddInstruction(new Instruction("CALL", 0xcd, 3, 17, new byte[0], CALL));
             machine.AddInstruction(new Instruction("ACI", 0xce, 2, 7, new byte[0], ACI));
             machine.AddInstruction(new Instruction("RST 1", 0xcf, 1, 11, new byte[0], RST_1));
-            machine.AddInstruction(new Instruction("RNC", 0xd0, 1, 11, new byte[5], RNC));
+            machine.AddInstruction(new Instruction("RNC", 0xd0, 1, 11, new byte[] { 5 }, RNC));
             machine.AddInstruction(new Instruction("POP D", 0xd1, 1, 10, new byte[0], POP_D));
             machine.AddInstruction(new Instruction("JNC", 0xd2, 3, 10, new byte[0], JNC));
             machine.AddInstruction(new Instruction("OUT", 0xd3, 2, 10, new byte[0], OUT));
-            machine.AddInstruction(new Instruction("CNC", 0xd4, 3, 17, new byte[11], CNC));
+            machine.AddInstruction(new Instruction("CNC", 0xd4, 3, 17, new byte[] { 11 }, CNC));
             machine.AddInstruction(new Instruction("PUSH D", 0xd5, 1, 11, new byte[0], PUSH_D));
             machine.AddInstruction(new Instruction("SUI", 0xd6, 2, 7, new byte[0], SUI));
             machine.AddInstruction(new Instruction("RST 2", 0xd7, 1, 11, new byte[0], RST_2));
-            machine.AddInstruction(new Instruction("RC", 0xd8, 1, 11, new byte[5], RC));
+            machine.AddInstruction(new Instruction("RC", 0xd8, 1, 11, new byte[] { 5 }, RC));
             machine.AddInstruction(new Instruction("*RET", 0xd9, 1, 10, new byte[0], RET));
             machine.AddInstruction(new Instruction("JC", 0xda, 3, 10, new byte[0], JC));
             machine.AddInstruction(new Instruction("IN", 0xdb, 2, 10, new byte[0], IN));
-            machine.AddInstruction(new Instruction("CC", 0xdc, 3, 17, new byte[11], CC));
+            machine.AddInstruction(new Instruction("CC", 0xdc, 3, 17, new byte[] { 11 }, CC));
             machine.AddInstruction(new Instruction("*CALL", 0xdd, 3, 17, new byte[0], CALL));
             machine.AddInstruction(new Instruction("SBI", 0xde, 2, 7, new byte[0], SBI));
             machine.AddInstruction(new Instruction("RST 3", 0xdf, 1, 11, new byte[0], RST_3));
-            machine.AddInstruction(new Instruction("RPO", 0xe0, 1, 11, new byte[5], RPO));
+            machine.AddInstruction(new Instruction("RPO", 0xe0, 1, 11, new byte[] { 5 }, RPO));
             machine.AddInstruction(new Instruction("POP H", 0xe1, 1, 10, new byte[0], POP_H));
             machine.AddInstruction(new Instruction("JPO", 0xe2, 3, 10, new byte[0], JPO));
             machine.AddInstruction(new Instruction("XTHL", 0xe3, 1, 18, new byte[0], XTHL));
-            machine.AddInstruction(new Instruction("CPO", 0xe4, 3, 17, new byte[11], CPO));
+            machine.AddInstruction(new Instruction("CPO", 0xe4, 3, 17, new byte[] { 11 }, CPO));
             machine.AddInstruction(new Instruction("PUSH H", 0xe5, 1, 11, new byte[0], PUSH_H));
             machine.AddInstruction(new Instruction("ANI", 0xe6, 2, 7, new byte[0], ANI));
             machine.AddInstruction(new Instruction("RST 4", 0xe7, 1, 11, new byte[0], RST_4));
-            machine.AddInstruction(new Instruction("RPE", 0xe8, 1, 11, new byte[5], RPE));
+            machine.AddInstruction(new Instruction("RPE", 0xe8, 1, 11, new byte[] { 5 }, RPE));
             machine.AddInstruction(new Instruction("PCHL", 0xe9, 1, 5, new byte[0], PCHL));
             machine.AddInstruction(new Instruction("JPE", 0xea, 3, 10, new byte[0], JPE));
             machine.AddInstruction(new Instruction("XCHG", 0xeb, 1, 5, new byte[0], XCHG));
-            machine.AddInstruction(new Instruction("CPE", 0xec, 3, 17, new byte[11], CPE));
+            machine.AddInstruction(new Instruction("CPE", 0xec, 3, 17, new byte[] { 11 }, CPE));
             machine.AddInstruction(new Instruction("*CALL", 0xed, 3, 17, new byte[0], CALL));
             machine.AddInstruction(new Instruction("XRI", 0xee, 2, 7, new byte[0], XRI));
             machine.AddInstruction(new Instruction("RST 5", 0xef, 1, 11, new byte[0], RST_5));
-            machine.AddInstruction(new Instruction("RP", 0xf0, 1, 11, new byte[5], RP));
+            machine.AddInstruction(new Instruction("RP", 0xf0, 1, 11, new byte[] { 5 }, RP));
             machine.AddInstruction(new Instruction("POP PSW", 0xf1, 1, 10, new byte[0], POP_PSW));
             machine.AddInstruction(new Instruction("JP", 0xf2, 3, 10, new byte[0], JP));
             machine.AddInstruction(new Instruction("DI", 0xf3, 1, 4, new byte[0], DI));
-            machine.AddInstruction(new Instruction("CP", 0xf4, 3, 17, new byte[11], CP));
+            machine.AddInstruction(new Instruction("CP", 0xf4, 3, 17, new byte[] { 11 }, CP));
             machine.AddInstruction(new Instruction("PUSH PSW", 0xf5, 1, 11, new byte[0], PUSH_PSW));
             machine.AddInstruction(new Instruction("ORI", 0xf6, 2, 7, new byte[0], ORI));
             machine.AddInstruction(new Instruction("RST 6", 0xf7, 1, 11, new byte[0], RST_6));
-            machine.AddInstruction(new Instruction("RM", 0xf8, 1, 11, new byte[5], RM));
+            machine.AddInstruction(new Instruction("RM", 0xf8, 1, 11, new byte[] { 5 }, RM));
             machine.AddInstruction(new Instruction("SPHL", 0xf9, 1, 5, new byte[0], SPHL));
             machine.AddInstruction(new Instruction("JM", 0xfa, 3, 10, new byte[0], JM));
             machine.AddInstruction(new Instruction("EI", 0xfb, 1, 4, new byte[0], EI));
-            machine.AddInstruction(new Instruction("CM", 0xfc, 3, 17, new byte[11], CM));
+            machine.AddInstruction(new Instruction("CM", 0xfc, 3, 17, new byte[] { 11 }, CM));
             machine.AddInstruction(new Instruction("*CALL", 0xfd, 3, 17, new byte[0], CALL));
             machine.AddInstruction(new Instruction("CPI", 0xfe, 2, 7, new byte[0], CPI));
             machine.AddInstruction(new Instruction("RST 7", 0xff, 1, 11, new byte[0], RST_7));
@@ -687,7 +687,7 @@ namespace SLeighT80.Processors.i8080
         {
             ushort address = (ushort)((b3 << 8) + b2);
             machine.Registers[L] = machine.RAM[address];
-            machine.Registers[H] = machine.RAM[address + 1];
+            machine.Registers[H] = machine.RAM[(ushort)(address + 1)];
         }
 
         // 0x2b
@@ -1176,7 +1176,7 @@ namespace SLeighT80.Processors.i8080
         // 0x76
         private void HLT(byte b2, byte b3)
         {
-            //machine.On = false;
+            machine.Halted = true;
         }
 
         // 0x77
@@ -1995,7 +1995,7 @@ namespace SLeighT80.Processors.i8080
             byte h = machine.Registers[H];
             byte l = machine.Registers[L];
             machine.Registers[L] = machine.RAM[machine.SP];
-            machine.Registers[H] = machine.RAM[machine.SP + 1];
+            machine.Registers[H] = machine.RAM[(ushort)(machine.SP + 1)];
             machine.WriteMem(machine.SP, l);
             machine.WriteMem((ushort)(machine.SP + 1), h);
         }
@@ -2191,7 +2191,7 @@ namespace SLeighT80.Processors.i8080
         private void EI(byte b2, byte b3)
         {
             machine.InterruptsEnabled = true;
-            //machine.interrupt_delay = 1;
+            machine.InterruptDelay = 1;
         }
 
         // 0xfc
